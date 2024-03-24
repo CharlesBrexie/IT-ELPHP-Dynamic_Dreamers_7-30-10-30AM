@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RestaurantFrontPage"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/terms_back_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/lightgrey"
+        android:src="@drawable/backingicon" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fonttop"
+        android:textColor="@color/black"
+        android:text="Terms and Conditions"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:textAlignment="center"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:lineHeight="25dp"
+
+        android:layout_width= "350dp"
+        android:layout_height="500dp"
+        android:fontFamily="@font/fonttop"
+        android:textColor="@color/black"
+        android:text="@string/aboutUs"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textSize="12sp"/>
+</LinearLayout>

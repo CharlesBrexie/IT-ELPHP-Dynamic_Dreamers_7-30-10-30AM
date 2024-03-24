@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HealthShapers</string>
+    <string name="top_mesg">Welcome back \n
+    Coffee Madness</string>
+    <string name="make_don">Make a Donation</string>
+    <string name="your_don">Your Donations</string>
+    <string name="donation_desc">We have 15 food packets  for pickup in Banilad Location \n before 1:30 PM</string>
+    <string name="aboutUs">Lorem ipsum dolor sit amet, cons
+ectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+            \nLorem ipsum dolor sit amet, cons
+ectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+</resources>
