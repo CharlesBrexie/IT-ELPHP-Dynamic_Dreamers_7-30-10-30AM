@@ -1,0 +1,20 @@
+
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <shape >
+    <solid android:color="#8FE1D7"/> <!-- Change the color as per your need -->
+    <corners android:radius="20dp"/> <!-- Change the radius as per your need -->
+    <stroke android:width="2dp" android:color="@android:color/darker_gray"/>
+        </shape>
+    </item>
+
+    <item android:state_focused="false">
+        <shape >
+            <solid android:color="@color/white"/> <!-- Change the color as per your need -->
+            <corners android:radius="20dp"/> <!-- Change the radius as per your need -->
+
+        </shape>
+    </item>
+</selector>
+
