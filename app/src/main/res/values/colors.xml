@@ -7,4 +7,7 @@
     <color name="turquoise">#8FE1D7</color>
     <color name="cardviewGrey">#C4C4C4</color>
     <color name="iconBackground">#E7FFF9</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="buttonColor">#FFFFFF</color>
 </resources>
