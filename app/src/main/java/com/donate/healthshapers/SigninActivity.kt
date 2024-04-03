@@ -1,4 +1,4 @@
-package com.michdo.health_shapers
+package com.donate.healthshapers
 
 import android.content.Intent
 import android.widget.EditText
