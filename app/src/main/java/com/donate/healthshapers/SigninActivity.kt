@@ -34,7 +34,7 @@ class SigninActivity : AppCompatActivity() {
                 Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show()
 
                 // Start MainActivity after successful login
-                val intent = Intent(this, RegisterActivity::class.java)
+                val intent = Intent(this, RestaurantFrontPage::class.java)
                 startActivity(intent)
                 finish() // Optional - if you want to remove this activity from the stack
             } else {

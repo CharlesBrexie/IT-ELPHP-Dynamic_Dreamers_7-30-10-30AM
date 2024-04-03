@@ -23,7 +23,7 @@ class Profile : AppCompatActivity() {
 
         val logoutButton = findViewById<LinearLayout>(R.id.logout)
         logoutButton.setOnClickListener{
-            val intent = Intent(this, RestaurantFrontPage::class.java)
+            val intent = Intent(this, SigninActivity::class.java)
             startActivity(intent)
         }
     }
