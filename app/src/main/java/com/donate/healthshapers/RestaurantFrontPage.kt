@@ -13,19 +13,19 @@ class RestaurantFrontPage : AppCompatActivity() {
 
         val mdButton = findViewById<Button>(R.id.make_a_donation_button)
         mdButton.setOnClickListener{
-            val intent = Intent(this, new_donation::class.java)
+            val intent = Intent(this, New_donation::class.java)
             startActivity(intent)
         }
 
         val ydButton = findViewById<Button>(R.id.your_donations_button)
         ydButton.setOnClickListener{
-            val intent = Intent(this, your_donations::class.java)
+            val intent = Intent(this, Your_donations::class.java)
             startActivity(intent)
         }
 
         val dlButton = findViewById<Button>(R.id.donation_list_button)
         dlButton.setOnClickListener{
-            val intent = Intent(this, avaliable_donations::class.java)
+            val intent = Intent(this, Available_donations::class.java)
             startActivity(intent)
 
 

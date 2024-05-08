@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".new_donation"
+    tools:context=".New_donation"
     android:orientation="vertical"
     android:background="@color/lightgrey">
     <ImageButton

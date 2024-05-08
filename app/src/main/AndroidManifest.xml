@@ -23,10 +23,10 @@
         </activity>
 
         <activity
-            android:name=".your_donations"
+            android:name=".Your_donations"
             android:exported="false" />
         <activity
-            android:name=".terms_and_condition"
+            android:name=".Terms_and_condition"
             android:exported="false" />
         <activity
             android:name=".RestaurantFrontPage"
@@ -35,13 +35,13 @@
             android:name=".Profile"
             android:exported="false" />
         <activity
-            android:name=".new_donation"
+            android:name=".New_donation"
             android:exported="false" />
         <activity
-            android:name=".confirm_requests"
+            android:name=".Confirm_requests"
             android:exported="false" />
         <activity
-            android:name=".avaliable_donations"
+            android:name=".Available_donations"
             android:exported="false" />
         <activity
             android:name=".About_us"

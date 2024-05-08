@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/lightgrey"
-    tools:context=".your_donations">
+    tools:context=".Your_donations">
     <ImageButton
         android:id="@+id/your_donations_back_button"
         android:layout_width="30dp"

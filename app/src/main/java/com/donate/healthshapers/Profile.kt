@@ -17,7 +17,7 @@ class Profile : AppCompatActivity() {
         }
         val trmsBtn = findViewById<LinearLayout>(R.id.terms)
         trmsBtn.setOnClickListener{
-            val intent = Intent(this, terms_and_condition::class.java)
+            val intent = Intent(this, Terms_and_condition::class.java)
             startActivity(intent)
         }
 
