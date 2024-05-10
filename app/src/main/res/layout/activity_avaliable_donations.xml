@@ -29,28 +29,23 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
-
         />
-
-
-
-
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="10dp"
             android:src="@drawable/profileicon"
             android:background="@color/iconBackground"
             android:id="@+id/profileButton"
             android:layout_centerHorizontal="true"
             />
-
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/donationRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/donationRecycler"
         android:layout_below="@id/DonationList"
-        android:layout_margin="12dp"
-        />
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp" />
 
 </RelativeLayout>

@@ -12,9 +12,21 @@ class SigninActivity : AppCompatActivity() {
     // Define your constants here
     companion object {
         const val USERNAME = "user"
-        const val PASSWORD = "password"
+        const val PASSWORD = "p@ssword"
     }
+    private fun isValidPassword(enteredPassword: String): Boolean {
+        if(enteredPassword == PASSWORD)
+        {
+            val specialCharacters = "~`!@#$%^&*()-_=+\\|[{]};:'\",<.>/?"
+            val regex = Regex("^(?=.*[A-Za-z])(?=.*[$specialCharacters]).{8,}$")
+            return regex.matches(enteredPassword)
 
+        }
+        else
+        {
+            return false
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
@@ -30,7 +42,7 @@ class SigninActivity : AppCompatActivity() {
             val enteredPassword = passwordInput.text.toString()
 
             // Check if entered username and password match the constants
-            if (enteredUsername == USERNAME && enteredPassword == PASSWORD) {
+            if (enteredUsername == USERNAME && isValidPassword(enteredPassword)) {
                 Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show()
 
                 // Start MainActivity after successful login

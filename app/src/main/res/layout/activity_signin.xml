@@ -16,6 +16,7 @@
         android:hint="UserName:"
         android:paddingLeft="20dp"
         android:layout_marginTop="125dp"
+        android:singleLine="true"
         />
 
 
@@ -25,11 +26,13 @@
         android:hint="Password:"
         android:background="@drawable/textbox"
         android:id="@+id/password"
+        android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:drawablePadding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/username"
         android:layout_marginTop="15dp"
+        android:singleLine="true"
         />
     <TextView
         android:layout_width="wrap_content"
