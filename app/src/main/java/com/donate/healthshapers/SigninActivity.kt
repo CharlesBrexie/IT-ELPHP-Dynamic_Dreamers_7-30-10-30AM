@@ -7,9 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 
+
 class SigninActivity : AppCompatActivity() {
 
-    // Define your constants here
+
     companion object {
         const val USERNAME = "user"
         const val PASSWORD = "p@ssword"

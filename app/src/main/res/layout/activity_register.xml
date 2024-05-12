@@ -54,16 +54,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NGO"
+            android:id="@+id/radioButtonNGO"
             />
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Restaurant"
+            android:id="@+id/radioButtonRestaurant"
             />
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Private Donation"
+            android:id="@+id/radioButtonPrivateDonation"
             />
     </RadioGroup>
 
