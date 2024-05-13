@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "561001817881",
+    "firebase_url": "https://health-shapers-default-rtdb.firebaseio.com",
+    "project_id": "health-shapers",
+    "storage_bucket": "health-shapers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561001817881:android:7d7cf05b609703135b8788",
+        "android_client_info": {
+          "package_name": "com.donate.healthshapers"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC9ExnCEZmQsrxQ6WH2qP3pOdawkbUXBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

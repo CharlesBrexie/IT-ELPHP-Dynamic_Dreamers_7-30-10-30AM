@@ -81,4 +81,5 @@ data class User(
     val phoneNumber: String = "",
     val email: String = "",
     val userType: String = ""
+
 )
