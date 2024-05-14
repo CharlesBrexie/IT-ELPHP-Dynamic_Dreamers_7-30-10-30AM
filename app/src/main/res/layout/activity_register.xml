@@ -85,7 +85,7 @@
             android:fontFamily="@font/dmsans_reg"
             android:gravity="center"
             android:hint="User Name"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:paddingHorizontal="20dp"
             android:textColorHint="#2F2F2F"
             android:textSize="15sp" />
@@ -101,7 +101,7 @@
             android:fontFamily="@font/dmsans_reg"
             android:gravity="center"
             android:hint="Phone Number"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:paddingHorizontal="20dp"
             android:textColorHint="#2F2F2F"
             android:textSize="15sp" />
