@@ -1,124 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/textbox"
-        android:drawablePadding="10dp"
-        android:hint="Name:"
-        android:singleLine="true"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="100dp"
-        />
-
-
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:hint="Phone Number:"
-        android:background="@drawable/textbox"
-        android:id="@+id/phoneNumber"
-        android:paddingLeft="20dp"
-        android:drawablePadding="10dp"
-        android:singleLine="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/name"
-        android:layout_marginTop="15dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_login"
+    tools:context=".SigninActivity">
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/phoneNumber"
-        android:text="Register:"
-        android:layout_marginBottom="75dp"
-        android:layout_marginLeft="30dp"
-        android:textSize="30dp"
-        />
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/HealthShapers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/poppins_reg"
+                android:text="HealthShapers"
+                android:textColor="#FFFFFF"
+                android:textSize="33sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/slogan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-10dp"
+                android:fontFamily="@font/poppins_reg"
+                android:text="Make a difference"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/phoneNumber"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp">
-        <RadioButton
+        android:layout_marginTop="80dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/Register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NGO"
-            android:id="@+id/radioButtonNGO"
-            />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Restaurant"
-            android:id="@+id/radioButtonRestaurant"
-            />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Private Donation"
-            android:id="@+id/radioButtonPrivateDonation"
-            />
-    </RadioGroup>
+            android:layout_gravity="center_horizontal"
 
-    <EditText
-        android:id="@+id/Email"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/textbox"
-        android:drawablePadding="10dp"
-        android:hint="Email:"
-        android:paddingLeft="20dp"
-        android:singleLine="true"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/radioGroup"
-        />
-    <EditText
-        android:id="@+id/Password"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/textbox"
-        android:drawablePadding="10dp"
-        android:hint="Password:"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:singleLine="true"
-        android:layout_below="@id/Email"
-        />
+            android:fontFamily="@font/poppins_reg"
+            android:text="Register"
+            android:textColor="#FF9843"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="65dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/baseline_arrow_forward_24"
-        android:text="Submit"
-        android:textSize="15dp"
-        android:layout_below="@+id/Password"
-        android:backgroundTint="#8FE1D7"
-        android:textColor="@color/black"
-        android:id="@+id/submit"
-        />
-    <Button
-        android:id="@+id/mySigninButton"
-        android:layout_width="wrap_content"
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:drawableStart="@drawable/ic_user"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
+            android:hint="User Name"
+            android:inputType="textPassword"
+            android:paddingHorizontal="20dp"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/phoneNumber"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:drawableStart="@drawable/ic_phone"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
+            android:hint="Phone Number"
+            android:inputType="textPassword"
+            android:paddingHorizontal="20dp"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/Email"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:drawableStart="@drawable/ic_email"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="20dp"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/Password"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawableEnd="@drawable/ic_hide"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingHorizontal="20dp"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign in instead"
-        android:textColor="@color/black"
-        android:layout_below="@id/submit"
-        android:backgroundTint="@color/white"
         android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        tools:ignore="MissingConstraints">
 
-        />
-</RelativeLayout>
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonNGO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NGO"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/radioButtonRestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Restaurant"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/radioButtonPrivateDonation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Private Donation"
+                android:textSize="12sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="20dp">
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/roundstyle"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingLeft="80dp"
+        android:layout_marginBottom="30dp"
+        android:paddingEnd="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_reg"
+            android:text="Already have an account?"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/mySigninButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/poppins_reg"
+            android:text="Sign in"
+            android:textAllCaps="false"
+            android:textColor="#FF9843"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

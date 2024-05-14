@@ -2,6 +2,7 @@
     <string name="app_name">HealthShapers</string>
     <string name="top_mesg">Welcome back \n
     Coffee Madness</string>
+    <string name="dashboard">Dashboard</string>
     <string name="make_don">Make a Donation</string>
     <string name="your_don">Your Donations</string>
     <string name="donation_desc">We have 15 food packets  for pickup in Banilad Location \n before 1:30 PM</string>

@@ -31,7 +31,7 @@ class New_donation : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        val ndBackButton = findViewById<ImageButton>(R.id.new_donations_back_button)
+        val ndBackButton = findViewById<Button>(R.id.new_donations_back_button)
         ndBackButton.setOnClickListener {
             val intent = Intent(this, RestaurantFrontPage::class.java)
             startActivity(intent)

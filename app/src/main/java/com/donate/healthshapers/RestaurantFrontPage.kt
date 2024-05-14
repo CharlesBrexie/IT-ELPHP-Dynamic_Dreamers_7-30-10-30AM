@@ -27,13 +27,12 @@ class RestaurantFrontPage : AppCompatActivity() {
         dlButton.setOnClickListener{
             val intent = Intent(this, Available_donations::class.java)
             startActivity(intent)
-
-
         }
-        val pfBtn = findViewById<FrameLayout>(R.id.iconButton)
+        val pfBtn = findViewById<Button>(R.id.iconButton)
         pfBtn.setOnClickListener{
             val intent = Intent(this, Profile::class.java)
             startActivity(intent)
         }
+
     }
 }
