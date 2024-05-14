@@ -47,11 +47,11 @@
                     app:layout_constraintTop_toTopOf="parent"   >
 
                         <TextView
-                            android:id="@+id/title"
+                            android:id="@+id/ADitemName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:text="Title"
+                            android:text="Pan de Coco"
                             android:textStyle="bold"
                             android:textColor="@color/black"
                             android:textSize="16sp"
@@ -60,23 +60,50 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/description"
+                            android:id="@+id/ADtimePrep"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:text="we have 15 food packets for pickup in Banilad location before 1:30pm"
+                            android:text="2:30pm"
                             android:textColor="@color/black"
                             android:textSize="11sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/image"
                             app:layout_constraintTop_toTopOf="parent" />
                         <TextView
-                            android:id="@+id/time_sent"
+                            android:id="@+id/ADtquantity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_marginStart="20dp"
-                            android:text="5 hours ago"
+                            android:text="5000"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/image"
+                            app:layout_constraintTop_toTopOf="parent" />
+s
+                        <TextView
+                            android:id="@+id/ADaddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="20dp"
+                            android:text="Brgy. Guadalupe Cebu City"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/image"
+                            app:layout_constraintTop_toTopOf="parent" />>
+                        <TextView
+                            android:id="@+id/ADutensilsRequired"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="20dp"
+                            android:text="Yes"
                             android:textStyle="bold"
                             android:textColor="@color/black"
                             android:textSize="10sp"

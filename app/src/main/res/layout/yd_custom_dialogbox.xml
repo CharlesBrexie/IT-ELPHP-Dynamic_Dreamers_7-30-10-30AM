@@ -20,23 +20,46 @@
             android:layout_height="120dp"
             android:src="@drawable/redcrosspfp"
             android:id="@+id/imahe"
-           />
+            />
 
     </androidx.cardview.widget.CardView>
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/itemNamerelative_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pan de Coco"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground"
         android:layout_marginTop="20dp"
-        android:textSize="35dp"
-        android:id="@+id/title"
-        android:layout_below="@id/roundedpfp"
-        />
+        android:paddingVertical="10dp"
+        android:layout_below="@+id/roundedpfp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/dialogItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pan De Coco"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/timerelative_name"
         android:layout_width="match_parent"
@@ -46,7 +69,7 @@
         android:background="?attr/selectableItemBackground"
         android:layout_marginTop="20dp"
         android:paddingVertical="10dp"
-        android:layout_below="@+id/title">
+        android:layout_below="@+id/itemNamerelative_name">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -57,14 +80,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantity"
+                android:text="Time of Preparation"
                 android:textSize="12sp"/>
 
             <TextView
-                android:id="@+id/quantity"
+                android:id="@+id/dialogTimePrep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15"
+                android:text="10:30am"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
 
@@ -92,14 +115,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Location"
+                android:text="Quantity"
                 android:textSize="12sp"/>
 
             <TextView
-                android:id="@+id/location"
+                android:id="@+id/dialogQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="location"
+                android:text="5000"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
 
@@ -125,14 +148,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pickup before"
-                android:textSize="12sp"/>
+                android:text="Address"
+                android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/pickup_time"
+                android:id="@+id/dialogAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="pickup"
+                android:text="Brgy. Sanciangko Cebu City"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
 
@@ -170,14 +193,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="Utensils Needed"
                 android:textSize="12sp"/>
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/dialogAddressUtensilRequired"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="False"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
         </LinearLayout>

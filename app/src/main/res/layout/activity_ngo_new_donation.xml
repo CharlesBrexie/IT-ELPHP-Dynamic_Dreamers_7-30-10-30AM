@@ -27,134 +27,96 @@
         android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"
         android:textSize="18sp"/>
-
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         app:cardCornerRadius="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal">
         <EditText
-            android:id="@+id/itemName"
+            android:id="@+id/ETquantity"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:background="@null"
             android:layout_marginLeft="20dp"
             android:paddingLeft="20dp"
             android:inputType="text"
             android:singleLine="true"
-            android:layout_marginRight="20dp"
-            android:hint="Item Name"
-            android:textSize="16sp"/>
-    </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:cardCornerRadius="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal">
-        <EditText
-            android:id="@+id/timeOfPreparation"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:paddingLeft="20dp"
-            android:background="@null"
-            android:inputType="datetime"
-            android:singleLine="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="Time of Preparation"
-            android:textSize="16sp"/>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:cardCornerRadius="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal">
-        <EditText
-            android:id="@+id/quantity"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:paddingLeft="20dp"
-            android:background="@null"
-            android:inputType="number"
-            android:singleLine="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:hint="Quantity"
             android:textSize="16sp"/>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         app:cardCornerRadius="25dp"
         android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal">
         <EditText
-            android:id="@+id/address"
+            android:id="@+id/ETlocation"
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_height="50dp"
             android:paddingLeft="20dp"
             android:background="@null"
-            android:gravity="top|left"
-            android:inputType="textMultiLine"
-            android:overScrollMode="always"
-            android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"
-            android:lines="2"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:scrollHorizontally="false"
-            android:hint="Address"/>
+            android:inputType="text"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"
+
+            android:hint="Location"
+            android:textSize="16sp"/>
     </androidx.cardview.widget.CardView>
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/fonttop"
-        android:text="Utensils Required?"
-        android:textColor="@color/black"
-        android:textSize="12sp" />
-    <RadioGroup
+        android:layout_height="40dp"
+        app:cardCornerRadius="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal">
+        <EditText
+            android:id="@+id/ETneedBefore"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:background="@null"
+            android:inputType="text"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"
+            android:hint="Need Before"
+            android:textSize="16sp"/>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="2dp"
-        android:id="@+id/required">
-        <RadioButton android:id="@+id/yes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-8dp"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:text="Yes"/>
-        <RadioButton android:id="@+id/no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-8dp"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:text="No"/>
-    </RadioGroup>
+        android:layout_height="40dp"
+        app:cardCornerRadius="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal">
+        <EditText
+            android:id="@+id/ETDescription"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:background="@null"
+            android:inputType="text"
+            android:singleLine="true"
+            android:layout_marginLeft="20dp"
+            android:hint="Description"
+            android:textSize="16sp"/>
+    </androidx.cardview.widget.CardView>
+
     <Button
-        android:id="@+id/submit_new_donation"
+        android:id="@+id/NGO_submit_new_donation"
         android:layout_width="290dp"
         android:layout_height="50dp"
-        android:textSize="14sp"
-        android:textAllCaps="false"
-        android:layout_marginTop="30dp"
-        android:text="Submit"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/turquoise_button"
         android:paddingLeft="44dp"
         android:paddingRight="44dp"
-        android:background="@drawable/turquoise_button"/>
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:textSize="14sp" />
 
     <FrameLayout
         android:id="@+id/iconButton"

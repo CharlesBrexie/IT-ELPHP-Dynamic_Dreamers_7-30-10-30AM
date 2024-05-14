@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,275 +6,44 @@
     android:orientation="vertical"
     android:background="@color/lightgrey"
     tools:context=".Your_donations">
+
     <ImageButton
-        android:id="@+id/your_donations_back_button"
+        android:id="@+id/front_page_back_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
+        android:layout_toLeftOf="@id/profileButton"
         android:background="@color/lightgrey"
         android:src="@drawable/backingicon" />
 
+
     <TextView
-        android:id="@+id/liveDonationsTitle"
+        android:id="@+id/DonationList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="Live Donations"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/liveDonationsCardView"
-        android:layout_width="380dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/liveDonationsTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        app:cardCornerRadius="25dp">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:background="@color/cardviewGrey">
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="50dp"
-                >
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/profilepic"
-
-                    android:layout_gravity="center_vertical"
-                    />
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:layout_width="255dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Item Name"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Quantity: 200 Packets"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Status: Accepted"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/fonttop"
-                    android:text="Date: 23/05/2023"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/yourDonationsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/liveDonationsCardView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
         android:text="Your Donations"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="18sp" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/yourDonationsCardView"
-        android:layout_width="380dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/yourDonationsTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        app:cardCornerRadius="25dp">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:background="@color/cardviewGrey">
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="50dp"
-                >
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/profilepic"
-                    android:layout_gravity="center_vertical"
-                    />
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:layout_width="255dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Item Name"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Quantity: 200 Packets"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Status: Accepted"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/fonttop"
-                    android:text="Date: 23/05/2023"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/yourDonationsCardView2"
-        android:layout_width="380dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/yourDonationsCardView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        app:cardCornerRadius="25dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:background="@color/cardviewGrey">
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="50dp"
-                >
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/profilepic"
-
-                    android:layout_gravity="center_vertical"
-                    />
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:layout_width="255dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Item Name"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Quantity: 200 Packets"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/fonttop"
-                    android:textColor="@color/black"
-                    android:text="Status: Accepted"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/fonttop"
-                    android:text="Date: 23/05/2023"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-    <FrameLayout
-        android:id="@+id/iconButton"
+        android:textSize="18sp"
+        />
+    <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"
-        >
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:src="@drawable/profileicon"
-            android:background="@color/iconBackground"
-            />
-    </FrameLayout>
+        android:src="@drawable/profileicon"
+        android:background="@color/iconBackground"
+        android:id="@+id/profileButton"
+        android:layout_centerHorizontal="true"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/yourdonationsRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/DonationList"
+        tools:listitem="@layout/your_donation_item_layout"/>
+
 </RelativeLayout>

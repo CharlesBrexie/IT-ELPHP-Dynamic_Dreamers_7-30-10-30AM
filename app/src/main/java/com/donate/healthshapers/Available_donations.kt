@@ -1,8 +1,11 @@
 package com.donate.healthshapers
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -11,134 +14,99 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
-class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListener {
+class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListener{
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var dataList: ArrayList<DataClass>
-    lateinit var imageList:Array<Int>
-    lateinit var titleList:Array<String>
-    lateinit var quantityList:Array<Int>
-    lateinit var locationList:Array<String>
-    lateinit var pickupList:Array<String>
-    lateinit var descriptionList:Array<String>
-    lateinit var timeSentList:Array<String>
+    private lateinit var dbref : DatabaseReference
+    private lateinit var userRecyclerview : RecyclerView
+    private lateinit var userArrayList : ArrayList<DataClass>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_avaliable_donations)
 
-        val fpBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
-        fpBackButton.setOnClickListener{
+        val adBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
+        adBackButton.setOnClickListener {
             val intent = Intent(this, RestaurantFrontPage::class.java)
             startActivity(intent)
         }
 
-        imageList = arrayOf(
-            R.drawable.paper,
-            R.drawable.star,
-            R.drawable.profileicon,
-            R.drawable.profilepic,
-            R.drawable.redcrosspfp,
-            R.drawable.logouticon
-        )
-
-        titleList = arrayOf(
-            "Paper Company",
-            "Dominic & Co.",
-            "Seb's",
-            "Siomai sa Tisa",
-            "Julies",
-            "Orange & Lemons"
-        )
-        quantityList = arrayOf(
-            15,
-            30,
-            100,
-            20,
-            25,
-            12
-        )
-        locationList = arrayOf(
-            "Kamputhaw",
-            "Oppra",
-            "Sibonga",
-            "Banilad",
-            "Pasil",
-            "Danao"
-        )
-        pickupList = arrayOf(
-            "2:30pm",
-            "1:30pm",
-            "10:30am",
-            "11:30am",
-            "4:30pm",
-            "3:30pm"
-        )
-        descriptionList = arrayOf(
-            "15 packets of food in Barangay Kamputhaw Cebu City at 2:30pm for people with disabilities.",
-            "30 packets of food in Barangay Oppra Cebu City at 1:30pm",
-            "100 packets of food in Barangay Sibonga Cebu City at 1:30pm",
-            "20 packets of food in Barangay Banilad Cebu City at 1:30pm",
-            "25 packets of food in Barangay Pasil Cebu City at 1:30pm",
-            "12 packets of food in Barangay Danao Cebu City at 1:30pm"
-
-        )
-        timeSentList = arrayOf(
-            "1 hours ago",
-            "2 hours ago",
-            "3 hours ago",
-            "4 hours ago",
-            "5 hours ago",
-            "6 hours ago"
-
-        )
-
-        recyclerView = findViewById(R.id.donationRecycler);
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
-
-        dataList = arrayListOf<DataClass>()
-        getData()
-
-    }
-    private fun getData(){
-        for (i in imageList.indices){
-            val dataClass = DataClass(imageList[i],titleList[i],quantityList[i],locationList[i],pickupList[i], descriptionList[i]
-            ,timeSentList[i])
-            dataList.add(dataClass)
+        val pfBtn = findViewById<ImageView>(R.id.profileButton)
+        pfBtn.setOnClickListener{
+            val intent = Intent(this, Profile::class.java)
+            startActivity(intent)
         }
-        recyclerView.adapter = AdapterClass(dataList, this)
-    }
-    override fun onItemClick(data: DataClass) {
-        // Handle item click event here
-        showCustomDialog(data)
 
+        userRecyclerview = findViewById(R.id.allDonationRecycler)
+        userRecyclerview.layoutManager = LinearLayoutManager(this)
+        userRecyclerview.setHasFixedSize(true)
+        userArrayList = arrayListOf<DataClass>()
+
+        // Call function to fetch data from Firebase
+        getAllUserData()
+    }
+
+    private fun getAllUserData() {
+        // Get a reference to the location in the database where all user donations are stored
+        val dbref = FirebaseDatabase.getInstance().getReference("donations")
+
+        dbref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val allUserArrayList = ArrayList<DataClass>() // Initialize a list to hold data from all users
+                for (userSnapshot in snapshot.children) {
+                    // Loop through each user's donations
+                    for (donationSnapshot in userSnapshot.children) {
+                        val donation = donationSnapshot.getValue(DataClass::class.java)
+                        donation?.let {
+                            allUserArrayList.add(it)
+                        }
+                    }
+                }
+                // Update your RecyclerView adapter with data from all users
+                userRecyclerview.adapter = AdapterClass(allUserArrayList, this@Available_donations)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, "Failed to read data from Firebase: ${error.message}")
+            }
+        })
+    }
+
+    override fun onItemClick(data: DataClass) {
+        showCustomDialog(data)
     }
 
     private fun showCustomDialog(data: DataClass) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.yd_custom_dialogbox, null)
+
+        // Access the views in your custom dialog layout
+        val itemNameTextView = dialogView.findViewById<TextView>(R.id.dialogItemName)
+        val timePrepTextView = dialogView.findViewById<TextView>(R.id.dialogTimePrep)
+        val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
+        val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
+        val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogAddressUtensilRequired)
+
+        // Set data to the views
+        itemNameTextView.text = data.itemName
+        timePrepTextView.text = data.timeOfPreparation
+        quantityTextView.text = data.quantity
+        addressTextView.text = data.address
+        utensilsRequiredTextView.text = data.utensilsRequired.toString()
+
+        // Create and show the dialog
         val dialogBuilder = AlertDialog.Builder(this)
-        val inflater = this.layoutInflater
-        val dialogView = inflater.inflate(R.layout.activity_donation_dialog_box, null)
         dialogBuilder.setView(dialogView)
-
-        // Initialize views in the dialog layout
-        val imageImageView = dialogView.findViewById<ImageView>(R.id.imahe)
-        val titleTextView = dialogView.findViewById<TextView>(R.id.title)
-        val quantityTextView = dialogView.findViewById<TextView>(R.id.quantity)
-        val locationTextView = dialogView.findViewById<TextView>(R.id.location)
-        val pickupTextView = dialogView.findViewById<TextView>(R.id.pickup_time)
-        val descriptionTextView = dialogView.findViewById<TextView>(R.id.description)
-
-        // Set data to views
-        imageImageView.setImageResource(data.dataImage)
-        titleTextView.text = data.dataTitle
-        quantityTextView.text = data.dataQuantity.toString()
-        locationTextView.text = data.dataLocation
-        pickupTextView.text = data.dataPickup
-        descriptionTextView.text = data.dataDescription
-
-        val alertDialog = dialogBuilder.create()
-        alertDialog.show()
+            .setTitle("Donation Details")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
 }

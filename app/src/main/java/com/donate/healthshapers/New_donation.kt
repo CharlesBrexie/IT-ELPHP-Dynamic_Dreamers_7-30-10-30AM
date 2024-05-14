@@ -1,14 +1,24 @@
 package com.donate.healthshapers
 
+
+import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.util.*
 
 class New_donation : AppCompatActivity() {
@@ -20,6 +30,12 @@ class New_donation : AppCompatActivity() {
         setContentView(R.layout.activity_new_donation)
 
         auth = FirebaseAuth.getInstance()
+
+        val ndBackButton = findViewById<ImageButton>(R.id.new_donations_back_button)
+        ndBackButton.setOnClickListener {
+            val intent = Intent(this, RestaurantFrontPage::class.java)
+            startActivity(intent)
+        }
 
         val submitButton = findViewById<Button>(R.id.submit_new_donation)
         submitButton.setOnClickListener {
@@ -62,6 +78,5 @@ class New_donation : AppCompatActivity() {
         }
     }
 }
-
 
 
