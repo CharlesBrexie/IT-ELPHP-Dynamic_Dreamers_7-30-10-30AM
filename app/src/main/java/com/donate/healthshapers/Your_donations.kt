@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -29,7 +30,7 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_your_donations)
 
-        val ydBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
+        val ydBackButton = findViewById<Button>(R.id.front_page_back_button)
         ydBackButton.setOnClickListener {
             val intent = Intent(this, RestaurantFrontPage::class.java)
             startActivity(intent)

@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="10dp"
-    android:layout_marginVertical="10dp"
-    app:cardCornerRadius="20dp"
+    android:layout_marginVertical="5dp"
+    app:cardCornerRadius="10dp"
     app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,8 +16,8 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="100dp"
-                    android:layout_marginStart="20dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_marginStart="10dp"
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/roundedpfp"
                     android:layout_centerHorizontal="true"
@@ -29,10 +29,11 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
                         <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:id="@+id/image"
-                            android:src="@drawable/star"
+                            android:src="@drawable/pizza"
+                            android:layout_gravity="center_vertical"
                            />
 
                 </androidx.cardview.widget.CardView>
@@ -54,7 +55,7 @@
                             android:text="Pan de Coco"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/image"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +67,7 @@
                             android:layout_marginStart="20dp"
                             android:text="2:30pm"
                             android:textColor="@color/black"
-                            android:textSize="11sp"
+                            android:textSize="10sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/image"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +75,6 @@
                             android:id="@+id/ADtquantity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:layout_marginStart="20dp"
                             android:text="5000"
                             android:textStyle="bold"
@@ -88,7 +88,6 @@ s
                             android:id="@+id/ADaddress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:layout_marginStart="20dp"
                             android:text="Brgy. Guadalupe Cebu City"
                             android:textStyle="bold"
@@ -101,7 +100,7 @@ s
                             android:id="@+id/ADutensilsRequired"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+
                             android:layout_marginStart="20dp"
                             android:text="Yes"
                             android:textStyle="bold"

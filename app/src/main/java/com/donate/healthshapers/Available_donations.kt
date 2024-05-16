@@ -30,15 +30,14 @@ class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_avaliable_donations)
 
-        val adBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
-        adBackButton.setOnClickListener {
-            val intent = Intent(this, RestaurantFrontPage::class.java)
-            startActivity(intent)
-        }
-
-        val pfBtn = findViewById<ImageView>(R.id.profileButton)
+        val pfBtn = findViewById<Button>(R.id.iconButton)
         pfBtn.setOnClickListener{
             val intent = Intent(this, Profile::class.java)
+            startActivity(intent)
+        }
+        val dbBtn = findViewById<Button>(R.id.homebtn)
+        dbBtn.setOnClickListener{
+            val intent = Intent(this, RestaurantFrontPage::class.java)
             startActivity(intent)
         }
 
@@ -49,6 +48,8 @@ class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListene
 
         // Call function to fetch data from Firebase
         getAllUserData()
+
+
     }
 
     private fun getAllUserData() {
@@ -108,5 +109,6 @@ class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListene
             .create()
             .show()
     }
+
 
 }

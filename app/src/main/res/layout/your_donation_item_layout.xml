@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="8dp"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="10dp"
     android:layout_margin="10dp"
     >
 
@@ -17,14 +17,14 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
+                app:cardCornerRadius="8dp"
                 >
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/profilepic"
-
                     android:layout_gravity="center_vertical"
                     />
             </androidx.cardview.widget.CardView>
@@ -33,6 +33,7 @@
                 android:layout_width="205dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -40,46 +41,47 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/fonttop"
+                    android:fontFamily="@font/poppins_reg"
                     android:textColor="@color/black"
                     android:text="Item Name"
-                    android:textSize="14sp" />
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/tvTimePrep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/fonttop"
+                    android:fontFamily="@font/poppins_reg"
                     android:text="1:30pm"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/tvQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/fonttop"
+                    android:fontFamily="@font/poppins_reg"
                     android:textColor="@color/black"
                     android:text="Quantity: 200 Packets"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/tvAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/fonttop"
+                    android:fontFamily="@font/poppins_reg"
                     android:textColor="@color/black"
                     android:text="Sanciangko Street Cebu City"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
                 <TextView
                     android:id="@+id/tvUtensilsRequired"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/fonttop"
+                    android:fontFamily="@font/poppins_reg"
                     android:textColor="@color/black"
                     android:text="Yes"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
             
         </LinearLayout>
