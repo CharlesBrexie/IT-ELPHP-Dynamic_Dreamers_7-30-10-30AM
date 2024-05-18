@@ -209,60 +209,69 @@
         </RadioGroup>
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="20dp">
-
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/roundstyle"
-            android:fontFamily="@font/dmsans_reg"
-            android:gravity="center"
-            android:text="Register"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout13"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:orientation="horizontal"
-        android:paddingLeft="80dp"
-        android:paddingEnd="80dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_reg"
-            android:text="Already have an account?"
-            android:textSize="12dp" />
+            android:layout_marginTop="50dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="20dp">
 
-        <Button
-            android:id="@+id/mySigninButton"
-            android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/roundstyle"
+                android:fontFamily="@font/dmsans_reg"
+                android:gravity="center"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout12"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/poppins_reg"
-            android:text="Sign in"
-            android:textAllCaps="false"
-            android:textColor="#FF9843"
-            android:textSize="12dp" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_reg"
+                android:text="Already have an account?"
+                android:textSize="12dp" />
+
+            <Button
+                android:id="@+id/mySigninButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/poppins_reg"
+                android:text="Sign in"
+                android:textAllCaps="false"
+                android:textColor="#FF9843"
+                android:textSize="12dp" />
+        </LinearLayout>
     </LinearLayout>
 
 
