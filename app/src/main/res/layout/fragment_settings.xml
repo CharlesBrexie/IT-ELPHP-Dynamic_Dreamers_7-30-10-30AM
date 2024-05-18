@@ -23,7 +23,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins_reg"
-                android:text="Profile"
+                android:text="Settings"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />

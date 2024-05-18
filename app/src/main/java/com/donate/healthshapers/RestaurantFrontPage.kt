@@ -17,6 +17,7 @@ class RestaurantFrontPage : AppCompatActivity() {
         val dashboardFragment = Dashboard()
         val donationListFragment = Donation_List()
         val settingsFragment = Settings()
+        val profileFragment = Profile()
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
 //
@@ -78,6 +79,10 @@ class RestaurantFrontPage : AppCompatActivity() {
                 }
                 R.id.iconButton -> {
                     setCurrentFragment(settingsFragment)
+                    true
+                }
+                R.id.profileButton -> {
+                    setCurrentFragment(profileFragment)
                     true
                 }
                 else -> false
