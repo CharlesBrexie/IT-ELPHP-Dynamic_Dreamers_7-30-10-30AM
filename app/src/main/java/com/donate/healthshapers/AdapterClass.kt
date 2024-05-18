@@ -54,4 +54,18 @@ class AdapterClass(private val userList:ArrayList<DataClass>,
         fun onItemClick(data: DataClass)
     }
 
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        // Initialize views...
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(userList[position])
+            }
+        }
+    }
+
 }

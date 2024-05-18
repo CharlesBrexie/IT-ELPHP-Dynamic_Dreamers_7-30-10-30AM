@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <item
+                android:id="@+id/homebtn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="40dp"
+                android:icon="@drawable/ic_home"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:title="Home" />
+
+            <item
+                android:id="@+id/donation_list_button"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:icon="@drawable/ic_donation"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:title="Donations" />
+
+            <item
+                android:id="@+id/profileButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:icon="@drawable/ic_profile"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:title="Profile"/>
+
+            <item
+                android:id="@+id/iconButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="40dp"
+                android:icon="@drawable/ic_setting"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:title="Settings"/>
+
+</menu>
