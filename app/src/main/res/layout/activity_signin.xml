@@ -146,14 +146,16 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="20dp">
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/rememberme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_reg"
             android:text="Remember Me"
             android:textColor="#2F2F2F"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:checked="false"
+            />
 
         <Button
             android:id="@+id/forgotpassword"
