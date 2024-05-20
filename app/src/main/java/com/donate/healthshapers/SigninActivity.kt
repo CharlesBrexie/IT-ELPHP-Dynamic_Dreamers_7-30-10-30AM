@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
-import com.donate.healthshapers.RegisterActivity
-import com.donate.healthshapers.RestaurantFrontPage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -48,9 +46,6 @@ class SigninActivity : AppCompatActivity() {
             rememberMeCheckBox.isChecked = false
         }
 
-        // Ensure checkbox is unchecked initially
-        rememberMeCheckBox.isChecked = false
-
         loginButton.setOnClickListener {
             val enteredUsername = usernameInput.text.toString()
             val enteredPassword = passwordInput.text.toString()
@@ -71,10 +66,23 @@ class SigninActivity : AppCompatActivity() {
                             }
                         }
 
-                        // Redirect to your main activity
-                        val intent = Intent(this, RestaurantFrontPage::class.java)
-                        startActivity(intent)
-                        finish()
+                        // Redirect user based on userType
+                        database.child("users").child(auth.currentUser!!.uid)
+                            .get().addOnSuccessListener { dataSnapshot ->
+                                val userType = dataSnapshot.child("userType").value.toString()
+                                val intent = when (userType) {
+                                    "NGO" -> Intent(this, NgoFrontPage::class.java)
+                                    "Restaurant" -> Intent(this, RestaurantFrontPage::class.java)
+                                    "Private Donation" -> Intent(this, RestaurantFrontPage::class.java)
+                                    else -> Intent(this, SigninActivity::class.java) // Default to SigninActivity
+                                }
+                                startActivity(intent)
+                                finish()
+                            }.addOnFailureListener {
+                                // Handle failure
+                                Toast.makeText(baseContext, "Failed to get user type.",
+                                    Toast.LENGTH_SHORT).show()
+                            }
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(baseContext, "Authentication failed.",

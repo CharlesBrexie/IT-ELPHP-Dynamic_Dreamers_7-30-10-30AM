@@ -21,6 +21,9 @@
             android:name=".NGO_Login"
             android:exported="false" />
         <activity
+            android:name=".NgoFrontPage"
+            android:exported="false" />
+        <activity
             android:name=".Donation_Dialog_Box"
             android:exported="false" />
 
