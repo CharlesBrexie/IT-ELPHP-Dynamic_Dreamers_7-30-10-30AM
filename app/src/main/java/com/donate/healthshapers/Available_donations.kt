@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListener{
 
@@ -40,7 +41,6 @@ class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListene
             val intent = Intent(this, RestaurantFrontPage::class.java)
             startActivity(intent)
         }
-
         userRecyclerview = findViewById(R.id.allDonationRecycler)
         userRecyclerview.layoutManager = LinearLayoutManager(this)
         userRecyclerview.setHasFixedSize(true)
@@ -48,13 +48,10 @@ class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListene
 
         // Call function to fetch data from Firebase
         getAllUserData()
-
-
     }
-
     private fun getAllUserData() {
         // Get a reference to the location in the database where all user donations are stored
-        val dbref = FirebaseDatabase.getInstance().getReference("donations")
+        dbref = FirebaseDatabase.getInstance().getReference("donations")
 
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -98,7 +95,18 @@ class Available_donations : AppCompatActivity(), AdapterClass.OnItemClickListene
         quantityTextView.text = data.quantity
         addressTextView.text = data.address
         utensilsRequiredTextView.text = data.utensilsRequired.toString()
+        val imageView = dialogView.findViewById<ImageView>(R.id.imahe) // ImageView in dialog
 
+        if (!data.imageUrl.isNullOrEmpty()) {
+            Picasso.get()
+                .load(data.imageUrl)
+                .placeholder(R.drawable.healthshapers) // Placeholder image while loading
+                .error(R.drawable.healthshapers) // Error image if loading fails
+                .into(imageView)
+        } else {
+            // Load placeholder image if imageUrl is null or empty
+            imageView.setImageResource(R.drawable.healthshapers)
+        }
         // Create and show the dialog
         val dialogBuilder = AlertDialog.Builder(this)
         dialogBuilder.setView(dialogView)

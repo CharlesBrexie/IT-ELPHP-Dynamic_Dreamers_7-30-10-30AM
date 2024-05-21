@@ -71,7 +71,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/DonationList"
-            tools:listitem="@layout/your_donation_item_layout"/>
+            tools:listitem="@layout/your_donation_item_layout"
+            android:clickable="true"
+            android:focusable="true"/>
 
     </LinearLayout>
 

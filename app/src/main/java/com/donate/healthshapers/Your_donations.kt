@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
 
@@ -74,9 +75,12 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
     }
 
     override fun onItemClick(data: DataClass) {
+        Log.d("ItemClick", "Item clicked: ${data.itemName}")
+
+        // Log the imageUrl from the clicked DataClass
+        Log.d("ImageUrl", "Clicked item imageUrl: ${data.imageUrl}")
         showCustomDialog(data)
     }
-
     private fun showCustomDialog(data: DataClass) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.yd_custom_dialogbox, null)
 
@@ -93,6 +97,18 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
         quantityTextView.text = data.quantity
         addressTextView.text = data.address
         utensilsRequiredTextView.text = data.utensilsRequired.toString()
+        val imageView = dialogView.findViewById<ImageView>(R.id.imahe) // ImageView in dialog
+
+        if (!data.imageUrl.isNullOrEmpty()) {
+            Picasso.get()
+                .load(data.imageUrl)
+                .placeholder(R.drawable.healthshapers) // Placeholder image while loading
+                .error(R.drawable.healthshapers) // Error image if loading fails
+                .into(imageView)
+        } else {
+            // Load placeholder image if imageUrl is null or empty
+            imageView.setImageResource(R.drawable.healthshapers)
+        }
 
         // Create and show the dialog
         val dialogBuilder = AlertDialog.Builder(this)

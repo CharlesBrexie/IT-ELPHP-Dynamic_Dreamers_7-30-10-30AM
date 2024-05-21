@@ -1,15 +1,18 @@
 package com.donate.healthshapers
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 
-class AdapterClass(private val userList:ArrayList<DataClass>,
-                   private val listener: OnItemClickListener,
-                  ) : RecyclerView.Adapter<AdapterClass.MyViewHolder>(){
+class AdapterClass(private val userList: ArrayList<DataClass>,
+                   private val listener: OnItemClickListener) :
+                    RecyclerView.Adapter<AdapterClass.MyViewHolder>(){
 
     fun updateData(newData: ArrayList<DataClass>) {
         userList.clear() // Clear the existing list
@@ -30,17 +33,32 @@ class AdapterClass(private val userList:ArrayList<DataClass>,
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = userList[position]
 
+        Log.d("ImageUrl", "Current item imageUrl: ${currentItem.imageUrl}")
+
         // Bind other data
         holder.itemName.text = currentItem.itemName.toString()
         holder.timeOfPreparation.text = currentItem.timeOfPreparation.toString()
         holder.quantity.text = currentItem.quantity.toString()
         holder.address.text = currentItem.address.toString()
         holder.utensilsRequired.text = currentItem.utensilsRequired.toString()
+            // Check if imageUrl is not null or empty
+            if (!currentItem.imageUrl.isNullOrEmpty()) {
+                Picasso.get()
+                    .load(currentItem.imageUrl)
+                    .placeholder(R.drawable.healthshapers) // Placeholder image while loading
+                    .error(R.drawable.profilepic) // Error image if loading fails
+                    .into(holder.imageView)
+            } else {
+                // Load placeholder image if imageUrl is null or empty
+                Picasso.get()
+                    .load(R.drawable.profilepic)
+                    .into(holder.imageView)
+            }
 
-        // Set click listener on item view
-        holder.itemView.setOnClickListener {
-            listener.onItemClick(currentItem)
-        }
+            // Set click listener
+            holder.itemView.setOnClickListener {
+                listener.onItemClick(currentItem)
+            }
     }
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val itemName : TextView = itemView.findViewById(R.id.ADitemName)
@@ -48,10 +66,12 @@ class AdapterClass(private val userList:ArrayList<DataClass>,
         val quantity : TextView = itemView.findViewById(R.id.ADtquantity)
         val address : TextView = itemView.findViewById(R.id.ADaddress)
         val utensilsRequired : TextView = itemView.findViewById(R.id.ADutensilsRequired)
+        val imageView : ImageView = itemView.findViewById(R.id.ADimage)
     }
 
     interface OnItemClickListener {
         fun onItemClick(data: DataClass)
+
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {

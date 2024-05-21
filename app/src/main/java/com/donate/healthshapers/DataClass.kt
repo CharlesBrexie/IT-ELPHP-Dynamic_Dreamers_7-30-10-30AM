@@ -1,9 +1,10 @@
 package com.donate.healthshapers
 
-data class DataClass(
-    var itemName: String? = "",
-    var timeOfPreparation: String? = "",
-    var quantity: String? = "",
-    var address: String? = "",
-    var utensilsRequired: Boolean? = false
-)
+class DataClass {
+    var itemName: String? = null
+    var timeOfPreparation: String? = null
+    var quantity: String? = null
+    var address: String? = null
+    var utensilsRequired: Boolean = false
+    var imageUrl: String? = null
+}
