@@ -20,15 +20,15 @@ class Confirm_requests : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val adBackButton = findViewById<ImageButton>(R.id.available_donations_back_button)
-        adBackButton.setOnClickListener{
-            val intent = Intent(this, Available_donations::class.java)
-            startActivity(intent)
-        }
-        val pfBtn = findViewById<FrameLayout>(R.id.iconButton)
-        pfBtn.setOnClickListener{
-            val intent = Intent(this, Profile::class.java)
-            startActivity(intent)
-        }
+//        val adBackButton = findViewById<ImageButton>(R.id.available_donations_back_button)
+//        adBackButton.setOnClickListener{
+//            val intent = Intent(this, Available_donations::class.java)
+//            startActivity(intent)
+//        }
+//        val pfBtn = findViewById<FrameLayout>(R.id.iconButton)
+//        pfBtn.setOnClickListener{
+//            val intent = Intent(this, Profile::class.java)
+//            startActivity(intent)
+//        }
     }
 }
