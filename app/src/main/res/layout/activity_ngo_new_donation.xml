@@ -20,23 +20,45 @@
         <ImageButton
             android:id="@+id/new_donations_back_button"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="38dp"
             android:layout_marginLeft="15dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_circle" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="70dp"
             android:fontFamily="@font/poppins_reg"
             android:text="Food Details"
             android:textColor="#FF9843"
             android:textSize="23dp"
             android:textStyle="bold" />
     </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
     <LinearLayout
         android:id="@+id/linearLayout11"
@@ -139,6 +161,8 @@
             android:textSize="14sp"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
