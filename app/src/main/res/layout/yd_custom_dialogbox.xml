@@ -203,6 +203,15 @@
                 android:text="False"
                 android:textSize="16sp"
                 android:textColor="@color/black"/>
+            <Button
+                android:id="@+id/requestButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Request"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"/>
         </LinearLayout>
+
     </RelativeLayout>
 </RelativeLayout>

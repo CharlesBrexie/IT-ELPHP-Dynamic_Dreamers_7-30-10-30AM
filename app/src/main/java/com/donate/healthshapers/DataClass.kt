@@ -9,5 +9,6 @@ class DataClass {
     var imageUrl: String? = null
     var name: String? = null
     var phoneNumber: String? = null
-    var email: String? = null
+    var email: String? = ""
+    var userType: String? = ""
 }

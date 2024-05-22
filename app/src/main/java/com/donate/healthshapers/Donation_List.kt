@@ -1,33 +1,28 @@
 package com.donate.healthshapers
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.content.ContentValues.TAG
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.OnItemClickListener {
 
-    private lateinit var dbref: DatabaseReference
     private lateinit var userRecyclerview: RecyclerView
     private lateinit var userArrayList: ArrayList<DataClass>
+    private var currentUserType: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +33,10 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         userRecyclerview = view.findViewById(R.id.allDonationRecycler)
         userRecyclerview.layoutManager = LinearLayoutManager(context)
         userRecyclerview.setHasFixedSize(true)
-        userArrayList = arrayListOf<DataClass>()
+        userArrayList = arrayListOf()
+
+        // Call function to fetch current user's userType
+        fetchCurrentUserType()
 
         // Call function to fetch data from Firebase
         getAllUserData()
@@ -46,24 +44,55 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         return view
     }
 
+    private fun fetchCurrentUserType() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUserId = currentUser?.uid
+        if (currentUserId != null) {
+            val userTypeRef = FirebaseDatabase.getInstance().getReference("users").child(currentUserId).child("userType")
+            userTypeRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    currentUserType = snapshot.getValue(String::class.java)
+                    Log.d(TAG, "Current User Type: $currentUserType")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(TAG, "Failed to read current userType from Firebase: ${error.message}")
+                }
+            })
+        }
+    }
+
     private fun getAllUserData() {
-        // Get a reference to the location in the database where all user donations are stored
         val dbref = FirebaseDatabase.getInstance().getReference("donations")
 
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val allUserArrayList = ArrayList<DataClass>() // Initialize a list to hold data from all users
+                val allUserArrayList = ArrayList<DataClass>()
                 for (userSnapshot in snapshot.children) {
-                    // Loop through each user's donations
-                    for (donationSnapshot in userSnapshot.children) {
-                        val donation = donationSnapshot.getValue(DataClass::class.java)
-                        donation?.let {
-                            allUserArrayList.add(it)
-                        }
+                    val userId = userSnapshot.key // Get the user ID
+                    if (userId != null) {
+                        val userTypeRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("userType")
+                        userTypeRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(userTypeSnapshot: DataSnapshot) {
+                                val userType = userTypeSnapshot.getValue(String::class.java)
+                                for (donationSnapshot in userSnapshot.children) {
+                                    val donation = donationSnapshot.getValue(DataClass::class.java)
+                                    donation?.let {
+                                        // Assign userType to the corresponding DataClass object
+                                        it.userType = userType ?: "Default" // Handle null case
+                                        Log.d(TAG, "User Type: $userType")
+                                        allUserArrayList.add(it)
+                                    }
+                                }
+                                userRecyclerview.adapter = AdapterClass(allUserArrayList, this@Donation_List)
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.e(TAG, "Failed to read userType from Firebase: ${error.message}")
+                            }
+                        })
                     }
                 }
-                // Update your RecyclerView adapter with data from all users
-                userRecyclerview.adapter = AdapterClass(allUserArrayList, this@Donation_List)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -85,6 +114,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
         val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
         val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogAddressUtensilRequired)
+        val requestButton = dialogView.findViewById<Button>(R.id.requestButton)
 
         // Set data to the views
         itemNameTextView.text = data.itemName
@@ -92,6 +122,21 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         quantityTextView.text = data.quantity
         addressTextView.text = data.address
         utensilsRequiredTextView.text = data.utensilsRequired.toString()
+
+        // Conditional visibility for the request button based on userType
+        Log.d(TAG, "Current User Type: $currentUserType")
+        if (currentUserType == "NGO") {
+            Log.d(TAG, "Setting button visibility to VISIBLE")
+            requestButton.visibility = View.VISIBLE
+            requestButton.setOnClickListener {
+                // Inflate or launch the Confirm_requests activity/fragment
+                val intent = Intent(requireContext(), Confirm_requests::class.java)
+                startActivity(intent)
+            }
+        } else {
+            Log.d(TAG, "Setting button visibility to GONE")
+            requestButton.visibility = View.GONE
+        }
 
         // Create and show the dialog
         val dialogBuilder = AlertDialog.Builder(requireContext())
@@ -103,4 +148,9 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
             .create()
             .show()
     }
+
+    companion object {
+        private const val TAG = "Donation_List"
+    }
 }
+
