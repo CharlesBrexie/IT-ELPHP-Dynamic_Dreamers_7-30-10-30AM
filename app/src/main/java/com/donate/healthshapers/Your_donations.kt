@@ -31,15 +31,9 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_your_donations)
 
-        val ydBackButton = findViewById<Button>(R.id.front_page_back_button)
+        val ydBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
         ydBackButton.setOnClickListener {
             val intent = Intent(this, RestaurantFrontPage::class.java)
-            startActivity(intent)
-        }
-
-        val pfBtn = findViewById<ImageView>(R.id.profileButton)
-        pfBtn.setOnClickListener{
-            val intent = Intent(this, Profile::class.java)
             startActivity(intent)
         }
 

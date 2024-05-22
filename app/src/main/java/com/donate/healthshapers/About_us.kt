@@ -13,7 +13,7 @@ class About_us : AppCompatActivity() {
 
         val bckbtn = findViewById<ImageView>(R.id.about_us_back_button)
         bckbtn.setOnClickListener{
-            val intent = Intent(this, Profile::class.java)
+            val intent = Intent(this, Settings::class.java)
             startActivity(intent)
         }
     }

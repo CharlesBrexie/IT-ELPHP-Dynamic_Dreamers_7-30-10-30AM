@@ -12,7 +12,7 @@ class Terms_and_condition : AppCompatActivity() {
 
         val bckbtn = findViewById<ImageView>(R.id.terms_back_button)
         bckbtn.setOnClickListener{
-            val intent = Intent(this, Profile::class.java)
+            val intent = Intent(this, Settings::class.java)
             startActivity(intent)
         }
     }

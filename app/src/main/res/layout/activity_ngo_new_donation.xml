@@ -1,137 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".New_donation"
+    android:background="@color/lightgrey"
     android:orientation="vertical"
-    android:background="@color/lightgrey">
-    <ImageButton
-        android:id="@+id/new_donations_back_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@color/lightgrey"
-        android:src="@drawable/backingicon" />
+    tools:context=".New_donation">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="Food Details:"
-        android:fontFamily="@font/fonttop"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:textSize="18sp"/>
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:cardCornerRadius="25dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/new_donations_back_button"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_circle" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="70dp"
+            android:fontFamily="@font/poppins_reg"
+            android:text="Food Details"
+            android:textColor="#FF9843"
+            android:textSize="23dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal">
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout4"
+        tools:ignore="MissingConstraints">
+
         <EditText
             android:id="@+id/ETquantity"
-            android:layout_width="250dp"
+            android:layout_width="340dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:paddingLeft="20dp"
-            android:inputType="text"
-            android:singleLine="true"
-
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
             android:hint="Quantity"
-            android:textSize="16sp"/>
-    </androidx.cardview.widget.CardView>
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:cardCornerRadius="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal">
         <EditText
             android:id="@+id/ETlocation"
-            android:layout_width="250dp"
+            android:layout_width="340dp"
             android:layout_height="50dp"
-            android:paddingLeft="20dp"
-            android:background="@null"
-            android:inputType="text"
-            android:singleLine="true"
-            android:layout_marginLeft="20dp"
-
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
             android:hint="Location"
-            android:textSize="16sp"/>
-    </androidx.cardview.widget.CardView>
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:cardCornerRadius="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal">
         <EditText
             android:id="@+id/ETneedBefore"
-            android:layout_width="250dp"
+            android:layout_width="340dp"
             android:layout_height="50dp"
-            android:paddingLeft="20dp"
-            android:background="@null"
-            android:inputType="text"
-            android:singleLine="true"
-            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
             android:hint="Need Before"
-            android:textSize="16sp"/>
-    </androidx.cardview.widget.CardView>
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
 
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        app:cardCornerRadius="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal">
         <EditText
             android:id="@+id/ETDescription"
-            android:layout_width="250dp"
+            android:layout_width="340dp"
             android:layout_height="50dp"
-            android:paddingLeft="20dp"
-            android:background="@null"
-            android:inputType="text"
-            android:singleLine="true"
-            android:layout_marginLeft="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:fontFamily="@font/dmsans_reg"
+            android:gravity="center"
             android:hint="Description"
-            android:textSize="16sp"/>
-    </androidx.cardview.widget.CardView>
+            android:inputType="textMultiLine"
+            android:lines="2"
+            android:overScrollMode="always"
+            android:paddingHorizontal="20dp"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/NGO_submit_new_donation"
-        android:layout_width="290dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/turquoise_button"
-        android:paddingLeft="44dp"
-        android:paddingRight="44dp"
-        android:text="Submit"
-        android:textAllCaps="false"
-        android:textSize="14sp" />
 
-    <FrameLayout
-        android:id="@+id/iconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginLeft="320dp"
-        android:layout_marginTop="30dp"
-        >
-        <ImageView
-            android:layout_width="50dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout11"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/NGO_submit_new_donation"
+            android:layout_width="290dp"
             android:layout_height="50dp"
-            android:padding="10dp"
-            android:src="@drawable/profileicon"
-            android:background="@color/iconBackground"
-            />
-    </FrameLayout>
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/roundstyle"
+            android:paddingLeft="44dp"
+            android:paddingRight="44dp"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,6 +1,5 @@
 package com.donate.healthshapers
 
-
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -12,13 +11,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import java.util.*
 
 class New_donation : AppCompatActivity() {
@@ -26,7 +23,8 @@ class New_donation : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val PICK_IMAGE_REQUEST = 1
     private lateinit var photoImageView: ImageView
-    var selectedImageUri : Uri? = null
+    private lateinit var uploadPhoto: Button
+    var selectedImageUri: Uri? = null
     private var imageUrl: String? = null
 
     private lateinit var submitButton: Button
@@ -39,21 +37,27 @@ class New_donation : AppCompatActivity() {
 
         val addPhotoButton = findViewById<Button>(R.id.add_photo)
         photoImageView = findViewById(R.id.photoImageView)
+        uploadPhoto = findViewById(R.id.upload_photo)
+        submitButton = findViewById(R.id.submit_new_donation)
+
+        // Hide the uploadPhoto button initially
+        uploadPhoto.visibility = Button.GONE
+        submitButton.isEnabled = false
+
         addPhotoButton.setOnClickListener {
             openGallery()
         }
-        val ndBackButton = findViewById<Button>(R.id.new_donations_back_button)
+
+        val ndBackButton = findViewById<ImageButton>(R.id.new_donations_back_button)
         ndBackButton.setOnClickListener {
             val intent = Intent(this, RestaurantFrontPage::class.java)
             startActivity(intent)
         }
 
-         submitButton = findViewById(R.id.submit_new_donation)
-         submitButton.isEnabled = false
-         submitButton.setOnClickListener {
+        submitButton.setOnClickListener {
             saveDonation()
         }
-        val uploadPhoto = findViewById<Button>(R.id.upload_photo)
+
         uploadPhoto.setOnClickListener {
             uploadImage()
         }
@@ -64,6 +68,7 @@ class New_donation : AppCompatActivity() {
         intent.type = "image/*"
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST) {
@@ -73,17 +78,21 @@ class New_donation : AppCompatActivity() {
                 photoImageView.setImageURI(selectedImageUri)
                 photoImageView.visibility = ImageView.VISIBLE
 
+                // Show the uploadPhoto button
+                uploadPhoto.visibility = Button.VISIBLE
 
             } else {
                 // User canceled the inputting
                 selectedImageUri = null
                 photoImageView.visibility = ImageView.GONE
+                uploadPhoto.visibility = Button.GONE // Hide the uploadPhoto button
                 // Disable submit button
                 submitButton.isEnabled = false
                 Toast.makeText(this, "Input canceled", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
     private fun uploadImage() {
         if (selectedImageUri != null) {
             val storageReference = FirebaseStorage.getInstance().getReference().child(UUID.randomUUID().toString())
@@ -112,9 +121,12 @@ class New_donation : AppCompatActivity() {
                 Toast.makeText(this@New_donation, "File Upload Canceled...", Toast.LENGTH_LONG).show()
                 // Clear selectedImageUri to indicate no image is selected
                 selectedImageUri = null
+                // Hide the uploadPhoto button
+                uploadPhoto.visibility = Button.GONE
             }
         }
     }
+
     private fun saveDonation() {
         val itemName = findViewById<EditText>(R.id.itemName).text.toString()
         val timeOfPreparation = findViewById<EditText>(R.id.timeOfPreparation).text.toString()

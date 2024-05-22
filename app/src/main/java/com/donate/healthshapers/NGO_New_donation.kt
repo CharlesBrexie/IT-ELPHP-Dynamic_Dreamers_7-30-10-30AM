@@ -1,6 +1,7 @@
 package com.donate.healthshapers
 
 import android.content.Intent
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -12,7 +13,7 @@ class NGO_New_donation : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ngo_new_donation)
 
-          val NGOndBackButton = findViewById<FrameLayout>(R.id.iconButton)
+          val NGOndBackButton = findViewById<ImageButton>(R.id.new_donations_back_button)
         NGOndBackButton.setOnClickListener {
             val intent = Intent(this, RestaurantFrontPage::class.java)
             startActivity(intent)
