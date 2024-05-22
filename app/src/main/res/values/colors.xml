@@ -9,4 +9,6 @@
     <color name="iconBackground">#E7FFF9</color>
     <color name="buttonColor">#FF9843</color>
     <color name="darkgrey">#393939</color>
+    <color name="readonly_background">#D3D3D3</color>
+
 </resources>
