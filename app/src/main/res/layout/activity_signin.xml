@@ -99,39 +99,77 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/username"
+        <RelativeLayout
             android:layout_width="340dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/rounded_edittext_background"
-            android:drawableStart="@drawable/ic_email"
-            android:fontFamily="@font/dmsans_reg"
-            android:gravity="center"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="20dp"
-            android:textColorHint="#2F2F2F"
-            android:textSize="15sp" />
+            android:layout_marginTop="15dp">
 
-        <EditText
-            android:id="@+id/password"
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_edittext_background"
+                android:fontFamily="@font/dmsans_reg"
+                android:gravity="center"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"
+                android:paddingStart="40dp"
+                android:paddingEnd="20dp"
+                android:textColorHint="#2F2F2F"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/emailIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/ic_email" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="340dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_edittext_background"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawableEnd="@drawable/ic_hide"
-            android:fontFamily="@font/dmsans_reg"
-            android:gravity="center"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingHorizontal="20dp"
-            android:textColorHint="#2F2F2F"
-            android:textSize="15sp" />
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_edittext_background"
+                android:fontFamily="@font/dmsans_reg"
+                android:gravity="center"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:textColorHint="#2F2F2F"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/passwordIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/ic_lock" />
+
+            <ImageButton
+                android:background="@android:color/transparent"
+                android:id="@+id/togglePasswordVisibility"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/ic_hide" />
+        </RelativeLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linearLayout6"

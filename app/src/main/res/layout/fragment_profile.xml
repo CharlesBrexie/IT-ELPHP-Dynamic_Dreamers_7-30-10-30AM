@@ -127,11 +127,11 @@
                 android:backgroundTint="@color/readonly_background"
                 android:drawableStart="@drawable/ic_email"
                 android:drawableEnd="@drawable/ic_edit"
+                android:focusable="false"
                 android:fontFamily="@font/dmsans_reg"
                 android:gravity="center"
                 android:hint="Email Address"
                 android:inputType="none"
-                android:focusable="false"
                 android:paddingHorizontal="20dp"
                 android:textColorHint="#2F2F2F"
                 android:textSize="15sp" />
