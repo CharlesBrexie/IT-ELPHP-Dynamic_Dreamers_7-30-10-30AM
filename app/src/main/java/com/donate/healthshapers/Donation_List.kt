@@ -144,6 +144,12 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
             requestButton.setOnClickListener {
                 // Inflate or launch the Confirm_requests activity/fragment
                 val intent = Intent(requireContext(), Confirm_requests::class.java)
+                intent.putExtra("itemName", data.itemName)
+                intent.putExtra("timeOfPreparation", data.timeOfPreparation)
+                intent.putExtra("quantity", data.quantity)
+                intent.putExtra("address", data.address)
+                intent.putExtra("utensilsRequired", data.utensilsRequired)
+                intent.putExtra("imageUrl", data.imageUrl)
                 startActivity(intent)
             }
         } else {
@@ -166,4 +172,3 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         private const val TAG = "Donation_List"
     }
 }
-
