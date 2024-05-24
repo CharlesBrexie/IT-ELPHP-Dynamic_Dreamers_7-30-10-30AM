@@ -21,9 +21,9 @@ class Confirm_requests : AppCompatActivity() {
         // Set up the back button
         val crButton = findViewById<Button>(R.id.confirm_donation_button)
         crButton.setOnClickListener {
-            val intent = Intent(this, Your_donations::class.java)
+            val intent = Intent(this, NgoFrontPage::class.java)
             startActivity(intent)
-        }
+        }//change this
 
         // Receive intent extras
         val itemName = intent.getStringExtra("itemName")
