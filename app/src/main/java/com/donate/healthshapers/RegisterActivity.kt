@@ -41,40 +41,48 @@ class RegisterActivity : AppCompatActivity() {
                 else -> "Unknown"
             }
 
-            // Check if email already exists
-            checkIfEmailExists(email) { emailExists ->
-                if (!emailExists) {
-                    // Register the user in Firebase Authentication
-                    auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                // Registration successful
-                                val user = User(name, phoneNumber, email, userType)
-                                database.child("users").child(auth.currentUser!!.uid)
-                                    .setValue(user)
-                                    .addOnCompleteListener { databaseTask ->
-                                        if (databaseTask.isSuccessful) {
-                                            // Registration and data save successful
-                                            val intent = Intent(this, SigninActivity::class.java)
-                                            startActivity(intent)
-                                        } else {
-                                            // Error saving data
-                                            // You can handle this according to your app's logic
-                                            Log.e("RegisterActivity", "Error saving data: ${databaseTask.exception}")
+            // Check if all fields are filled
+            if (name.isNotEmpty() && phoneNumber.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+                // All fields are filled, continue with registration process
+
+                // Check if email already exists
+                checkIfEmailExists(email) { emailExists ->
+                    if (!emailExists) {
+                        // Register the user in Firebase Authentication
+                        auth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(this) { task ->
+                                if (task.isSuccessful) {
+                                    // Registration successful
+                                    val user = User(name, phoneNumber, email, userType)
+                                    database.child("users").child(auth.currentUser!!.uid)
+                                        .setValue(user)
+                                        .addOnCompleteListener { databaseTask ->
+                                            if (databaseTask.isSuccessful) {
+                                                // Registration and data save successful
+                                                val intent = Intent(this, SigninActivity::class.java)
+                                                startActivity(intent)
+                                            } else {
+                                                // Error saving data
+                                                // You can handle this according to your app's logic
+                                                Log.e("RegisterActivity", "Error saving data: ${databaseTask.exception}")
+                                            }
                                         }
-                                    }
-                            } else {
-                                // Registration failed
-                                val exception = task.exception
-                                Log.e("RegisterActivity", "Sign-up failed", exception)
-                                // Display an error message to the user or handle the error accordingly
-                                Toast.makeText(this, "Registration failed: ${exception?.message}", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    // Registration failed
+                                    val exception = task.exception
+                                    Log.e("RegisterActivity", "Sign-up failed", exception)
+                                    // Display an error message to the user or handle the error accordingly
+                                    Toast.makeText(this, "Registration failed: ${exception?.message}", Toast.LENGTH_SHORT).show()
+                                }
                             }
-                        }
-                } else {
-                    // Email already exists, display message to the user
-                    Toast.makeText(this, "The email is already in use.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Email already exists, display message to the user
+                        Toast.makeText(this, "The email is already in use.", Toast.LENGTH_SHORT).show()
+                    }
                 }
+            } else {
+                // Some fields are empty, display a message to the user
+                Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
             }
         }
 
