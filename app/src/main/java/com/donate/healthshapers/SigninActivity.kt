@@ -36,6 +36,7 @@ class SigninActivity : AppCompatActivity() {
         val signupButton = findViewById<Button>(R.id.signupID)
         val rememberMeCheckBox = findViewById<CheckBox>(R.id.rememberme)
         val togglePasswordVisibilityButton = findViewById<ImageButton>(R.id.togglePasswordVisibility)
+        val forgotPassButton = findViewById<Button>(R.id.forgotpassword)
 
         val savedUsername = sharedPreferences.getString("username", "")
         val savedPassword = sharedPreferences.getString("password", "")
@@ -118,6 +119,10 @@ class SigninActivity : AppCompatActivity() {
 
         signupButton.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+        forgotPassButton.setOnClickListener {
+            val intent = Intent(this, ForgotPassword::class.java)
             startActivity(intent)
         }
     }
