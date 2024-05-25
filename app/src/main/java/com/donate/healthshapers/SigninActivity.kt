@@ -7,8 +7,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -32,6 +35,7 @@ class SigninActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.loginButton)
         val signupButton = findViewById<Button>(R.id.signupID)
         val rememberMeCheckBox = findViewById<CheckBox>(R.id.rememberme)
+        val togglePasswordVisibilityButton = findViewById<ImageButton>(R.id.togglePasswordVisibility)
 
         val savedUsername = sharedPreferences.getString("username", "")
         val savedPassword = sharedPreferences.getString("password", "")
@@ -44,6 +48,21 @@ class SigninActivity : AppCompatActivity() {
         } else {
             // If no saved credentials, ensure the checkbox is unchecked
             rememberMeCheckBox.isChecked = false
+        }
+
+        togglePasswordVisibilityButton.setOnClickListener {
+            // Toggle password visibility
+            val currentVisibility = passwordInput.transformationMethod
+            passwordInput.transformationMethod =
+                if (currentVisibility == PasswordTransformationMethod.getInstance())
+                    HideReturnsTransformationMethod.getInstance() else
+                    PasswordTransformationMethod.getInstance()
+
+            // Change icon accordingly
+            togglePasswordVisibilityButton.setImageResource(
+                if (currentVisibility == PasswordTransformationMethod.getInstance())
+                    R.drawable.ic_hide else R.drawable.ic_show
+            )
         }
 
         loginButton.setOnClickListener {
@@ -97,4 +116,3 @@ class SigninActivity : AppCompatActivity() {
         }
     }
 }
-
