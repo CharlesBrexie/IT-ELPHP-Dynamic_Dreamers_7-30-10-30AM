@@ -69,6 +69,12 @@ class SigninActivity : AppCompatActivity() {
             val enteredUsername = usernameInput.text.toString()
             val enteredPassword = passwordInput.text.toString()
 
+            // Check if username and password fields are empty
+            if (enteredUsername.isEmpty() || enteredPassword.isEmpty()) {
+                Toast.makeText(this@SigninActivity, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             // Authenticate user with Firebase
             auth.signInWithEmailAndPassword(enteredUsername, enteredPassword)
                 .addOnCompleteListener(this) { task ->
