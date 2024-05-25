@@ -154,7 +154,7 @@
                         android:fontFamily="@font/dmsans_reg"
                         android:gravity="center"
                         android:hint="Phone Number"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:paddingStart="40dp"
                         android:paddingEnd="20dp"
                         android:textColorHint="#2F2F2F"

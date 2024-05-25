@@ -9,13 +9,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,11 +25,7 @@ class RegisterActivity : AppCompatActivity() {
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
-
-        // Write a message to the database
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("message")
-        myRef.setValue("Hello, World!")
+        database = FirebaseDatabase.getInstance().reference
 
         val submitButton = findViewById<Button>(R.id.submit)
         submitButton.setOnClickListener {
@@ -43,32 +41,41 @@ class RegisterActivity : AppCompatActivity() {
                 else -> "Unknown"
             }
 
-            // Register the user in Firebase Authentication
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Registration successful
-                        val user = User(name, phoneNumber, email, userType)
-                        FirebaseDatabase.getInstance().getReference("users")
-                            .child(auth.currentUser!!.uid)
-                            .setValue(user)
-                            .addOnCompleteListener { databaseTask ->
-                                if (databaseTask.isSuccessful) {
-                                    // Registration and data save successful
-                                    val intent = Intent(this, SigninActivity::class.java)
-                                    startActivity(intent)
-                                } else {
-                                    // Error saving data
-                                    // You can handle this according to your app's logic
-                                }
+            // Check if email already exists
+            checkIfEmailExists(email) { emailExists ->
+                if (!emailExists) {
+                    // Register the user in Firebase Authentication
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                // Registration successful
+                                val user = User(name, phoneNumber, email, userType)
+                                database.child("users").child(auth.currentUser!!.uid)
+                                    .setValue(user)
+                                    .addOnCompleteListener { databaseTask ->
+                                        if (databaseTask.isSuccessful) {
+                                            // Registration and data save successful
+                                            val intent = Intent(this, SigninActivity::class.java)
+                                            startActivity(intent)
+                                        } else {
+                                            // Error saving data
+                                            // You can handle this according to your app's logic
+                                            Log.e("RegisterActivity", "Error saving data: ${databaseTask.exception}")
+                                        }
+                                    }
+                            } else {
+                                // Registration failed
+                                val exception = task.exception
+                                Log.e("RegisterActivity", "Sign-up failed", exception)
+                                // Display an error message to the user or handle the error accordingly
+                                Toast.makeText(this, "Registration failed: ${exception?.message}", Toast.LENGTH_SHORT).show()
                             }
-                    } else {
-                        // Registration failed
-                        val exception = task.exception
-                        Log.e("RegisterActivity", "Sign-up failed", exception)
-                        // Display an error message to the user or handle the error accordingly
-                    }
+                        }
+                } else {
+                    // Email already exists, display message to the user
+                    Toast.makeText(this, "The email is already in use.", Toast.LENGTH_SHORT).show()
                 }
+            }
         }
 
         val mySigninButton = findViewById<Button>(R.id.mySigninButton)
@@ -76,6 +83,7 @@ class RegisterActivity : AppCompatActivity() {
             val intent = Intent(this, SigninActivity::class.java)
             startActivity(intent)
         }
+
         // Set up password visibility toggle
         val passwordEditText = findViewById<EditText>(R.id.Password)
         val togglePasswordVisibilityButton = findViewById<ImageButton>(R.id.togglePasswordVisibility)
@@ -97,13 +105,24 @@ class RegisterActivity : AppCompatActivity() {
             passwordEditText.setSelection(passwordEditText.text.length)
         }
     }
-}
 
+    private fun checkIfEmailExists(email: String, callback: (Boolean) -> Unit) {
+        val query: Query = database.child("users").orderByChild("email").equalTo(email)
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                callback(dataSnapshot.exists())
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                callback(false)
+            }
+        })
+    }
+}
 
 data class User(
     val name: String = "",
     val phoneNumber: String = "",
     val email: String = "",
     val userType: String = ""
-
 )
