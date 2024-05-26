@@ -6,217 +6,226 @@
     android:layout_height="wrap_content"
     tools:context=".Donation_Dialog_Box"
     android:background="@drawable/rounded_dialog_background">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/roundedpfp"
+            android:layout_centerHorizontal="true">
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/redcrosspfp"
+                android:id="@+id/imahe"
+                />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="100dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/roundedpfp"
-        android:layout_centerHorizontal="true">
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/redcrosspfp"
-            android:id="@+id/imahe"
+        </androidx.cardview.widget.CardView>
+
+
+        <RelativeLayout
+            android:id="@+id/itemNamerelative_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginTop="20dp"
+            android:paddingVertical="10dp"
+            android:layout_below="@+id/roundedpfp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Item Name"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/dialogItemName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pan De Coco"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/timerelative_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginTop="20dp"
+            android:paddingVertical="10dp"
+            android:layout_below="@+id/itemNamerelative_name">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="70dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time of Preparation"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/dialogTimePrep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10:30am"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="10dp"
+            android:layout_below="@id/timerelative_name">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="70dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/dialogQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5000"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relative_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relative_name"
+            android:paddingVertical="10dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="70dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/dialogAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Brgy. Sanciangko Cebu City"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_below="@+id/relative_phone"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             />
 
-    </androidx.cardview.widget.CardView>
-
-
-    <RelativeLayout
-        android:id="@+id/itemNamerelative_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-        android:layout_marginTop="20dp"
-        android:paddingVertical="10dp"
-        android:layout_below="@+id/roundedpfp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <View
+            android:layout_below="@+id/relative_name"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            />
+        <RelativeLayout
+            android:id="@+id/relative_house_no"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:orientation="vertical">
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:layout_below="@id/relative_phone"
+            android:paddingVertical="10dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Item Name"
-                android:textSize="12sp" />
+                android:orientation="vertical"
+                android:layout_marginStart="70dp">
 
-            <TextView
-                android:id="@+id/dialogItemName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pan De Coco"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Utensils Needed"
+                    android:textSize="12sp"/>
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/dialogAddressUtensilRequired"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="False"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+                <Button
+                    android:id="@+id/requestButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Request"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"/>
+            </LinearLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/timerelative_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-        android:layout_marginTop="20dp"
-        android:paddingVertical="10dp"
-        android:layout_below="@+id/itemNamerelative_name">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        </RelativeLayout>
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="70dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time of Preparation"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:id="@+id/dialogTimePrep"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10:30am"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-        </LinearLayout>
-
+            android:text="Delete Donation" />
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relative_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-        android:layout_marginTop="10dp"
-        android:paddingVertical="10dp"
-        android:layout_below="@id/timerelative_name">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="70dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quantity"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:id="@+id/dialogQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5000"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+</ScrollView>
 
 
-    <RelativeLayout
-        android:id="@+id/relative_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relative_name"
-        android:paddingVertical="10dp">
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="70dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Address"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/dialogAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Brgy. Sanciangko Cebu City"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <View
-        android:layout_below="@+id/relative_phone"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        />
-
-    <View
-        android:layout_below="@+id/relative_name"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        />
-    <RelativeLayout
-        android:id="@+id/relative_house_no"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-        android:layout_below="@id/relative_phone"
-        android:paddingVertical="10dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="70dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Utensils Needed"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:id="@+id/dialogAddressUtensilRequired"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="False"
-                android:textSize="16sp"
-                android:textColor="@color/black"/>
-            <Button
-                android:id="@+id/requestButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Request"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:visibility="gone"/>
-        </LinearLayout>
-
-    </RelativeLayout>
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Donation" />
 </RelativeLayout>

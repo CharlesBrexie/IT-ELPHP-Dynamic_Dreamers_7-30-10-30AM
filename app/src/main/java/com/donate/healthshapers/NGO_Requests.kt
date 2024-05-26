@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -23,9 +24,9 @@ import com.squareup.picasso.Picasso
 
 class NGO_Requests : AppCompatActivity(),  AdapterClass.OnItemClickListener{
 
-    private lateinit var dbref : DatabaseReference
-    private lateinit var userRecyclerview : RecyclerView
-    private lateinit var userArrayList : ArrayList<DataClass>
+    private lateinit var dbref: DatabaseReference
+    private lateinit var userRecyclerview: RecyclerView
+    private lateinit var userArrayList: ArrayList<DataClass>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,36 +38,40 @@ class NGO_Requests : AppCompatActivity(),  AdapterClass.OnItemClickListener{
             startActivity(intent)
         }
 
-        userRecyclerview = findViewById(R.id.yourdonationsRecycler)
+        userRecyclerview = findViewById(R.id.ngoRequestRecycler)
         userRecyclerview.layoutManager = LinearLayoutManager(this)
         userRecyclerview.setHasFixedSize(true)
-        userArrayList = arrayListOf<DataClass>()
+        userArrayList = arrayListOf()
+        val checker = intent.getStringExtra("itemName")
+        if (checker == null ){
+            userRecyclerview.visibility = View.GONE
+        } else {
+            userRecyclerview.visibility = View.VISIBLE
+            // Retrieve data passed from Confirm_requests activity
+            val itemName = intent.getStringExtra("itemName")
+            val timeOfPreparation = intent.getStringExtra("timeOfPreparation")
+            val quantity = intent.getStringExtra("quantity")
+            val address = intent.getStringExtra("address")
+            val utensilsRequired = intent.getBooleanExtra("utensilsRequired", false)
+            val imageUrl = intent.getStringExtra("imageUrl")
 
-        getUserData()
-    }
+            // Create a DataClass instance and add it to the userArrayList
+            val data = DataClass().apply {
+                this.itemName = itemName
+                this.timeOfPreparation = timeOfPreparation
+                this.quantity = quantity
+                this.address = address
+                this.utensilsRequired = utensilsRequired
+                this.imageUrl = imageUrl
+            }
+            userArrayList.add(data)
 
-    private fun getUserData() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        if (userId != null) {
-            dbref = FirebaseDatabase.getInstance().getReference("donations").child(userId)
-
-            dbref.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    userArrayList.clear()
-                    for (donationSnapshot in snapshot.children) {
-                        val donation = donationSnapshot.getValue(DataClass::class.java)
-                        donation?.let {
-                            userArrayList.add(it)
-                        }
-                    }
-                    userRecyclerview.adapter = AdapterClass(userArrayList, this@NGO_Requests)
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e(TAG, "Failed to read data from Firebase: ${error.message}")
-                }
-            })
+            // Initialize your RecyclerView adapter and set it to the RecyclerView
+            val adapter = AdapterClass(userArrayList, this)
+            userRecyclerview.adapter = adapter
         }
     }
+
 
     override fun onItemClick(data: DataClass) {
         Log.d("ItemClick", "Item clicked: ${data.itemName}")
@@ -84,7 +89,8 @@ class NGO_Requests : AppCompatActivity(),  AdapterClass.OnItemClickListener{
         val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
         val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
         val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogAddressUtensilRequired)
-
+        val deleteButton = dialogView.findViewById<TextView>(R.id.deleteButton)
+        deleteButton.visibility = View.GONE
         // Set data to the views
         itemNameTextView.text = data.itemName
         timePrepTextView.text = data.timeOfPreparation

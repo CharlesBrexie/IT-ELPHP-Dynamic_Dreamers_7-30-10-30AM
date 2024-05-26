@@ -61,7 +61,7 @@
             android:name=".Confirm_requests"
             android:exported="false" />
         <activity
-            android:name=".Available_donations"
+            android:name=".NGO_Requests"
             android:exported="false" />
         <activity
             android:name=".About_us"
