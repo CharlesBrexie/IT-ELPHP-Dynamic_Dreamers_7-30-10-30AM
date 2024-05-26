@@ -25,6 +25,7 @@
                 android:layout_height="120dp"
                 android:src="@drawable/redcrosspfp"
                 android:id="@+id/imahe"
+                android:scaleType="centerCrop"
                 />
 
         </androidx.cardview.widget.CardView>
