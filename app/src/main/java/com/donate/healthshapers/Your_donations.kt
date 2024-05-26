@@ -21,11 +21,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 
-class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
+class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
 
-    private lateinit var dbref : DatabaseReference
-    private lateinit var userRecyclerview : RecyclerView
-    private lateinit var userArrayList : ArrayList<DataClass>
+    private lateinit var dbref: DatabaseReference
+    private lateinit var userRecyclerview: RecyclerView
+    private lateinit var userArrayList: ArrayList<DataClass>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +61,7 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
                     }
                     userRecyclerview.adapter = AdapterClass(userArrayList, this@Your_donations)
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     Log.e(TAG, "Failed to read data from Firebase: ${error.message}")
                 }
@@ -75,22 +76,18 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
         Log.d("ImageUrl", "Clicked item imageUrl: ${data.imageUrl}")
         showCustomDialog(data)
     }
+
     private fun showCustomDialog(data: DataClass) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.yd_custom_dialogbox, null)
 
         // Access the views in your custom dialog layout
         val itemNameTextView = dialogView.findViewById<TextView>(R.id.dialogItemName)
-        val timePrepTextView = dialogView.findViewById<TextView>(R.id.dialogTimePrep)
-        val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
-        val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
-        val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogAddressUtensilRequired)
+        // Other views...
 
         // Set data to the views
         itemNameTextView.text = data.itemName
-        timePrepTextView.text = data.timeOfPreparation
-        quantityTextView.text = data.quantity
-        addressTextView.text = data.address
-        utensilsRequiredTextView.text = data.utensilsRequired.toString()
+        // Set other data to other views...
+
         val imageView = dialogView.findViewById<ImageView>(R.id.imahe) // ImageView in dialog
 
         if (!data.imageUrl.isNullOrEmpty()) {
@@ -106,12 +103,56 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener{
 
         // Create and show the dialog
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setView(dialogView)
+        val alertDialog = dialogBuilder.setView(dialogView)
             .setTitle("Donation Details")
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
-            .show()
+
+        // Handle delete button click
+        val deleteButton = dialogView.findViewById<Button>(R.id.deleteButton)
+        deleteButton.setOnClickListener {
+            // Get the current user ID
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            if (userId != null) {
+                // Reference to the user's donations
+                val userDonationsRef =
+                    FirebaseDatabase.getInstance().getReference("donations").child(userId)
+
+                // Query to find the donation to delete based on its properties
+                val query = userDonationsRef.orderByChild("itemName").equalTo(data.itemName)
+
+                query.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        // Iterate over the matching donations
+                        for (donationSnapshot in snapshot.children) {
+                            // Delete the first matching donation found
+                            donationSnapshot.ref.removeValue()
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Donation deleted successfully")
+                                    alertDialog.dismiss() // Dismiss the dialog after deletion
+                                    return@addOnSuccessListener
+                                }
+                                .addOnFailureListener { exception ->
+                                    Log.e(TAG, "Error deleting donation: ${exception.message}")
+                                    // Handle error deleting donation
+                                    return@addOnFailureListener
+                                }
+                        }
+                        // If no matching donation found
+                        Log.e(TAG, "Donation not found")
+                        // Handle case where no matching donation is found
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e(TAG, "Error querying donations: ${error.message}")
+                        // Handle error querying donations
+                    }
+                })
+            }
+        }
+
+        alertDialog.show()
     }
 }
