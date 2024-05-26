@@ -36,23 +36,29 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:ignore="MissingClass">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="100dp">
 
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/redcrosspfp" />
-            </androidx.cardview.widget.CardView>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/myProfilePic"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pfp" />
+            <ImageButton
+                android:id="@+id/editProfPicBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="-40dp"
+                android:layout_marginRight="-60dp"
+                android:background="@drawable/ic_add"
+                android:contentDescription="Edit Profile Picture" />
 
             <TextView
+                android:id="@+id/userNameMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -64,6 +70,7 @@
                 android:textSize="22sp" />
 
             <TextView
+                android:id="@+id/userType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

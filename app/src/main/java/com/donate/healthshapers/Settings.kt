@@ -2,21 +2,35 @@ package com.donate.healthshapers
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import de.hdodenhof.circleimageview.CircleImageView
 
 class Settings : Fragment(R.layout.fragment_settings) {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var myProfilePic: ImageView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
-
+        database = FirebaseDatabase.getInstance().reference
+        myProfilePic = view.findViewById(R.id.myProfilePic)
+        val userTypeText = view.findViewById<TextView>(R.id.userType)
         // Initialize views and set click listeners
         val abtUsBtn = view.findViewById<LinearLayout>(R.id.about)
         abtUsBtn.setOnClickListener {
@@ -40,5 +54,47 @@ class Settings : Fragment(R.layout.fragment_settings) {
             startActivity(intent)
             activity?.finish()
         }
+        val usernameEditText = view.findViewById<TextView>(R.id.userNameMain)
+        // Fetch user data from Realtime Database
+        val userId = auth.currentUser?.uid
+        if (userId != null) {
+            database.child("users").child(userId).addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        val user = dataSnapshot.getValue(User::class.java)
+                        if (user != null) {
+                            usernameEditText.text = user.name
+                            userTypeText.text = user.userType
+
+                            if(user.userType=="NGO") {
+                                userTypeText.text = "Non Governmental Organization"
+                            }
+
+                            // Load profile picture if available
+                            if (!user.pfp.isNullOrEmpty()) {
+                                loadProfilePicture(user.pfp)
+                            }
+                        }
+
+                    } else {
+                        Log.d("Profile", "No such user")
+                    }
+                }
+
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d("Profile", "get failed with ", databaseError.toException())
+                }
+            })
+        }
+    }
+    private fun loadProfilePicture(profilePictureUrl: String) {
+        // Use a library like Glide or Picasso to load the image into the CircleImageView
+        Glide.with(this /* or your activity */)
+            .load(profilePictureUrl)
+            .placeholder(R.drawable.pfp) // Placeholder image while loading
+            .error(R.drawable.pfp) // Image to show if loading fails
+            .into(myProfilePic)
     }
 }

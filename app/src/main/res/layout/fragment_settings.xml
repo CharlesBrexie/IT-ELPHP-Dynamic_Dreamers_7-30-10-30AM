@@ -44,13 +44,15 @@
                 app:cardCornerRadius="100dp">
 
                 <ImageView
+                    android:id="@+id/myProfilePic"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/redcrosspfp" />
+                    android:src="@drawable/pfp" />
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/userNameMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -62,6 +64,7 @@
                 android:textSize="22sp" />
 
             <TextView
+                android:id="@+id/userType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
