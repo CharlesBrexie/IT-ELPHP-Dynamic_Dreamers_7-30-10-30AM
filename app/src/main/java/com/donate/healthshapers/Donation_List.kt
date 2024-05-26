@@ -108,8 +108,11 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
     }
 
     private fun showCustomDialog(data: DataClass) {
+
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.yd_custom_dialogbox, null)
 
+        val deleteButton = dialogView.findViewById<TextView>(R.id.deleteButton)
+        deleteButton.visibility = View.GONE
         // Access the views in your custom dialog layout
         val itemNameTextView = dialogView.findViewById<TextView>(R.id.dialogItemName)
         val timePrepTextView = dialogView.findViewById<TextView>(R.id.dialogTimePrep)
@@ -156,6 +159,8 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
             Log.d(TAG, "Setting button visibility to GONE")
             requestButton.visibility = View.GONE
         }
+
+
 
         // Create and show the dialog
         val dialogBuilder = AlertDialog.Builder(requireContext())
