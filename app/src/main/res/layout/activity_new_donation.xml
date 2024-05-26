@@ -96,7 +96,7 @@
             android:fontFamily="@font/dmsans_reg"
             android:gravity="center"
             android:hint="Time of Preparation"
-            android:inputType="time"
+            android:inputType="text"
             android:paddingHorizontal="20dp"
             android:textColorHint="#2F2F2F"
             android:textSize="15sp" />
@@ -243,22 +243,12 @@
                 android:layout_gravity="center"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginRight="10dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="Selected photo"
                 android:scaleType="centerCrop"
                 android:src="@drawable/add_photo"
                 android:visibility="visible" />
-            <Button
-                android:id="@+id/upload_photo"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:background="@drawable/roundstyle"
-                android:text="Upload"
-                android:textAllCaps="false"
-                android:textSize="14sp"
-                tools:ignore="MissingConstraints" />
+
         </LinearLayout>
 
 

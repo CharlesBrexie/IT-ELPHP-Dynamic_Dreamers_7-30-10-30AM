@@ -23,7 +23,6 @@ class New_donation : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val PICK_IMAGE_REQUEST = 1
     private lateinit var photoImageView: ImageView
-    private lateinit var uploadPhoto: Button
     var selectedImageUri: Uri? = null
     private var imageUrl: String? = null
 
@@ -37,12 +36,7 @@ class New_donation : AppCompatActivity() {
 
         val addPhotoButton = findViewById<Button>(R.id.add_photo)
         photoImageView = findViewById(R.id.photoImageView)
-        uploadPhoto = findViewById(R.id.upload_photo)
         submitButton = findViewById(R.id.submit_new_donation)
-
-        // Hide the uploadPhoto button initially
-        uploadPhoto.visibility = Button.GONE
-        submitButton.isEnabled = false
 
         addPhotoButton.setOnClickListener {
             openGallery()
@@ -55,11 +49,7 @@ class New_donation : AppCompatActivity() {
         }
 
         submitButton.setOnClickListener {
-            saveDonation()
-        }
-
-        uploadPhoto.setOnClickListener {
-            uploadImage()
+            uploadImageAndSaveDonation()
         }
     }
 
@@ -77,23 +67,16 @@ class New_donation : AppCompatActivity() {
                 selectedImageUri = data.data
                 photoImageView.setImageURI(selectedImageUri)
                 photoImageView.visibility = ImageView.VISIBLE
-
-                // Show the uploadPhoto button
-                uploadPhoto.visibility = Button.VISIBLE
-
             } else {
                 // User canceled the inputting
                 selectedImageUri = null
                 photoImageView.visibility = ImageView.GONE
-                uploadPhoto.visibility = Button.GONE // Hide the uploadPhoto button
-                // Disable submit button
-                submitButton.isEnabled = false
                 Toast.makeText(this, "Input canceled", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun uploadImage() {
+    private fun uploadImageAndSaveDonation() {
         if (selectedImageUri != null) {
             val storageReference =
                 FirebaseStorage.getInstance().getReference().child(UUID.randomUUID().toString())
@@ -103,11 +86,7 @@ class New_donation : AppCompatActivity() {
                 // Get the download URL for the uploaded image
                 storageReference.downloadUrl.addOnSuccessListener { uri ->
                     imageUrl = uri.toString()
-                    Toast.makeText(this@New_donation, "Image URL: $imageUrl", Toast.LENGTH_LONG)
-                        .show()
-                    Log.d("ImageUrl", "Current item imageUrl: $imageUrl")
-                    // Enable submit button
-                    submitButton.isEnabled = true
+                    saveDonation()
                 }.addOnFailureListener { exception ->
                     // Handle failure to get download URL
                     Log.e(TAG, "Failed to get download URL: $exception")
@@ -126,11 +105,9 @@ class New_donation : AppCompatActivity() {
                 Log.e(TAG, "File upload canceled")
                 Toast.makeText(this@New_donation, "File Upload Canceled...", Toast.LENGTH_LONG)
                     .show()
-                // Clear selectedImageUri to indicate no image is selected
-                selectedImageUri = null
-                // Hide the uploadPhoto button
-                uploadPhoto.visibility = Button.GONE
             }
+        } else {
+            saveDonation()
         }
     }
 

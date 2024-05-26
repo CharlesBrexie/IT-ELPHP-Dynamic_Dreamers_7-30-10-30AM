@@ -62,10 +62,10 @@ class Confirm_requests : AppCompatActivity() {
         }
 
         // Populate views with received data
-        findViewById<TextView>(R.id.confirm_title).text = data.itemName
-        findViewById<TextView>(R.id.confirm_time).text = data.timeOfPreparation
-        findViewById<TextView>(R.id.confirm_quantity).text = data.quantity
-        findViewById<TextView>(R.id.confirm_location).text = data.address
+        findViewById<TextView>(R.id.confirm_title).text =  data.itemName
+        findViewById<TextView>(R.id.confirm_time).text = "Pickup before:" + data.timeOfPreparation
+        findViewById<TextView>(R.id.confirm_quantity).text = "Quantity: " + data.quantity
+        findViewById<TextView>(R.id.confirm_location).text = "Location: " + data.address
         val imageView = findViewById<ImageView>(R.id.placeholder_image)
 
         // Load image URL using Picasso
@@ -103,7 +103,6 @@ class Confirm_requests : AppCompatActivity() {
                 reference.child(userId).child(donationKey).setValue(data)
                     .addOnSuccessListener {
                         Log.d(TAG, "Data saved to Firebase successfully")
-                        Toast.makeText( this, "Data saved to Firebase successfully", Toast.LENGTH_LONG).show()
                     }
                     .addOnFailureListener {
                         Log.e(TAG, "Error saving data to Firebase", it)

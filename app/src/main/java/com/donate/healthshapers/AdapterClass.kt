@@ -1,5 +1,6 @@
 package com.donate.healthshapers
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class AdapterClass(private val userList: ArrayList<DataClass>,
        return userList.size
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = userList[position]
 
@@ -40,7 +42,13 @@ class AdapterClass(private val userList: ArrayList<DataClass>,
         holder.timeOfPreparation.text = currentItem.timeOfPreparation.toString()
         holder.quantity.text = currentItem.quantity.toString()
         holder.address.text = currentItem.address.toString()
-        holder.utensilsRequired.text = currentItem.utensilsRequired.toString()
+        if(currentItem.utensilsRequired.toString() == "true"){
+            holder.utensilsRequired.text = "Utensils are needed"
+        }
+        else{
+            holder.utensilsRequired.text = "Utensils are not needed"
+        }
+
             // Check if imageUrl is not null or empty
             if (!currentItem.imageUrl.isNullOrEmpty()) {
                 Picasso.get()
