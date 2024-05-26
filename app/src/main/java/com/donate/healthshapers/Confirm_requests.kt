@@ -1,5 +1,6 @@
 package com.donate.healthshapers
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,18 +8,24 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
+import java.util.UUID
 
 class Confirm_requests : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirm_requests)
+
+        auth = FirebaseAuth.getInstance()
 
         // Set up the back button
         val backButton = findViewById<ImageButton>(R.id.available_donations_back_button)
@@ -75,17 +82,36 @@ class Confirm_requests : AppCompatActivity() {
 
         val confirmButton = findViewById<Button>(R.id.confirm_donation_button)
         confirmButton.setOnClickListener {
+            // Save data to Firebase
+            saveDataToFirebase(data)
             // Launch the NGO_Requests activity and pass the data
             val intent = Intent(this, NGO_Requests::class.java)
-            intent.putExtra("itemName", data.itemName)
-            intent.putExtra("timeOfPreparation", data.timeOfPreparation)
-            intent.putExtra("quantity", data.quantity)
-            intent.putExtra("address", data.address)
-            intent.putExtra("utensilsRequired", data.utensilsRequired)
-            intent.putExtra("imageUrl", data.imageUrl)
             startActivity(intent)
         }
-
-
+    }
+    private fun saveDataToFirebase(data: DataClass) {
+        val userId = auth.currentUser?.uid
+        // Initialize Firebase database reference
+        val database = FirebaseDatabase.getInstance()
+        // Get a reference to the "NGO Confirmed Donations" node
+        val reference = database.getReference("NGO Confirmed Donations")
+        // Generate a unique key for the donation
+        val donationKey = reference.push().key
+        // Save the data to Firebase under the user's ID
+        if (donationKey != null) {
+            if (userId != null) {
+                reference.child(userId).child(donationKey).setValue(data)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Data saved to Firebase successfully")
+                        Toast.makeText( this, "Data saved to Firebase successfully", Toast.LENGTH_LONG).show()
+                    }
+                    .addOnFailureListener {
+                        Log.e(TAG, "Error saving data to Firebase", it)
+                        Toast.makeText( this, "Error saving data to Firebase", Toast.LENGTH_LONG).show()
+                    }
+            }
+        } else {
+            Log.e(TAG, "Error generating donation key")
+        }
     }
 }

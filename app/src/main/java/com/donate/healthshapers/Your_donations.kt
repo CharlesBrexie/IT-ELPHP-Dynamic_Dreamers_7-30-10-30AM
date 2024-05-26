@@ -82,10 +82,18 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
 
         // Access the views in your custom dialog layout
         val itemNameTextView = dialogView.findViewById<TextView>(R.id.dialogItemName)
-        // Other views...
+        val timeOfPrepTextView = dialogView.findViewById<TextView>(R.id.dialogTimePrep)
+        val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
+        val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
+        val utensilsReqTextView = dialogView.findViewById<TextView>(R.id.dialogUtensilRequired)
 
         // Set data to the views
         itemNameTextView.text = data.itemName
+        timeOfPrepTextView.text = data.timeOfPreparation
+        quantityTextView.text = data.quantity
+        addressTextView.text = data.address
+        utensilsReqTextView.text = data.utensilsRequired.toString()
+
         // Set other data to other views...
 
         val imageView = dialogView.findViewById<ImageView>(R.id.imahe) // ImageView in dialog

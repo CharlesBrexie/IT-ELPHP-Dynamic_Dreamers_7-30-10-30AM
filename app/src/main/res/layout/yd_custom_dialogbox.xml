@@ -202,7 +202,7 @@
                     android:textSize="12sp"/>
 
                 <TextView
-                    android:id="@+id/dialogAddressUtensilRequired"
+                    android:id="@+id/dialogUtensilRequired"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="False"

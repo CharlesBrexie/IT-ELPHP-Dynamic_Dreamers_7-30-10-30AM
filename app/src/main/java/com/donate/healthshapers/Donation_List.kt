@@ -118,7 +118,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         val timePrepTextView = dialogView.findViewById<TextView>(R.id.dialogTimePrep)
         val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
         val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
-        val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogAddressUtensilRequired)
+        val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogUtensilRequired)
         val requestButton = dialogView.findViewById<Button>(R.id.requestButton)
 
         // Set data to the views
