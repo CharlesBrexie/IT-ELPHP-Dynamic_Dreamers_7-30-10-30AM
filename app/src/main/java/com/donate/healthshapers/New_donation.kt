@@ -95,21 +95,27 @@ class New_donation : AppCompatActivity() {
 
     private fun uploadImage() {
         if (selectedImageUri != null) {
-            val storageReference = FirebaseStorage.getInstance().getReference().child(UUID.randomUUID().toString())
+            val storageReference =
+                FirebaseStorage.getInstance().getReference().child(UUID.randomUUID().toString())
             val uploadTask = storageReference.putFile(selectedImageUri!!)
 
             uploadTask.addOnSuccessListener { taskSnapshot ->
                 // Get the download URL for the uploaded image
                 storageReference.downloadUrl.addOnSuccessListener { uri ->
                     imageUrl = uri.toString()
-                    Toast.makeText(this@New_donation, "Image URL: $imageUrl", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@New_donation, "Image URL: $imageUrl", Toast.LENGTH_LONG)
+                        .show()
                     Log.d("ImageUrl", "Current item imageUrl: $imageUrl")
                     // Enable submit button
                     submitButton.isEnabled = true
                 }.addOnFailureListener { exception ->
                     // Handle failure to get download URL
                     Log.e(TAG, "Failed to get download URL: $exception")
-                    Toast.makeText(this@New_donation, "Failed to get download URL", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@New_donation,
+                        "Failed to get download URL",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }.addOnFailureListener { exception ->
                 // Handle failure of the upload task
@@ -118,7 +124,8 @@ class New_donation : AppCompatActivity() {
             }.addOnCanceledListener {
                 // Handle cancellation of the upload task
                 Log.e(TAG, "File upload canceled")
-                Toast.makeText(this@New_donation, "File Upload Canceled...", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@New_donation, "File Upload Canceled...", Toast.LENGTH_LONG)
+                    .show()
                 // Clear selectedImageUri to indicate no image is selected
                 selectedImageUri = null
                 // Hide the uploadPhoto button
@@ -132,33 +139,51 @@ class New_donation : AppCompatActivity() {
         val timeOfPreparation = findViewById<EditText>(R.id.timeOfPreparation).text.toString()
         val quantity = findViewById<EditText>(R.id.quantity).text.toString()
         val address = findViewById<EditText>(R.id.address).text.toString()
-        val utensilsRequired = findViewById<RadioGroup>(R.id.required).checkedRadioButtonId == R.id.yes
+        val utensilsRequired =
+            findViewById<RadioGroup>(R.id.required).checkedRadioButtonId == R.id.yes
         val donationId = UUID.randomUUID().toString() // Generate unique donation ID
         val userId = auth.currentUser?.uid
 
-        if (userId != null) {
-            val donationRef = FirebaseDatabase.getInstance().getReference("donations").child(userId).child(donationId)
-            val donationData = HashMap<String, Any>()
-            donationData["itemName"] = itemName
-            donationData["timeOfPreparation"] = timeOfPreparation
-            donationData["quantity"] = quantity
-            donationData["address"] = address
-            donationData["utensilsRequired"] = utensilsRequired
-            donationData["imageUrl"] = imageUrl.toString()
+        // Check if all required fields are filled
+        if (itemName.isNotEmpty() && timeOfPreparation.isNotEmpty() && quantity.isNotEmpty() && address.isNotEmpty()) {
+            if (userId != null) {
+                val donationRef =
+                    FirebaseDatabase.getInstance().getReference("donations").child(userId)
+                        .child(donationId)
+                val donationData = HashMap<String, Any>()
+                donationData["itemName"] = itemName
+                donationData["timeOfPreparation"] = timeOfPreparation
+                donationData["quantity"] = quantity
+                donationData["address"] = address
+                donationData["utensilsRequired"] = utensilsRequired
+                donationData["imageUrl"] = imageUrl.toString()
 
-            donationRef.setValue(donationData)
-                .addOnSuccessListener {
-                    // Donation saved successfully
-                    Toast.makeText(this@New_donation, "Donation Data Successfully Saved", Toast.LENGTH_LONG).show()
-                    val intent = Intent(this, Your_donations::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                .addOnFailureListener {
-                    // Failed to save donation
-                    Toast.makeText(this@New_donation, "Donation Data Saving Failed", Toast.LENGTH_LONG).show()
-                    // Handle the error
-                }
+                donationRef.setValue(donationData)
+                    .addOnSuccessListener {
+                        // Donation saved successfully
+                        Toast.makeText(
+                            this@New_donation,
+                            "Donation Data Successfully Saved",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        val intent = Intent(this, Your_donations::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        // Failed to save donation
+                        Toast.makeText(
+                            this@New_donation,
+                            "Donation Data Saving Failed",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        // Handle the error
+                    }
+            }
+        } else {
+            // Notify user to fill in all fields
+            Toast.makeText(this@New_donation, "Please fill in all fields", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 }

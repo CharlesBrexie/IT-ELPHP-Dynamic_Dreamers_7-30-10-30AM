@@ -96,7 +96,7 @@
             android:fontFamily="@font/dmsans_reg"
             android:gravity="center"
             android:hint="Time of Preparation"
-            android:inputType="text"
+            android:inputType="time"
             android:paddingHorizontal="20dp"
             android:textColorHint="#2F2F2F"
             android:textSize="15sp" />
@@ -111,7 +111,7 @@
             android:fontFamily="@font/dmsans_reg"
             android:gravity="center"
             android:hint="Quantity"
-            android:inputType="text"
+            android:inputType="number"
             android:paddingHorizontal="20dp"
             android:textColorHint="#2F2F2F"
             android:textSize="15sp" />
