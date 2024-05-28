@@ -108,61 +108,34 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
     }
 
     private fun showCustomDialog(data: DataClass) {
-
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.yd_custom_dialogbox, null)
 
-        val deleteButton = dialogView.findViewById<TextView>(R.id.deleteButton)
-        deleteButton.visibility = View.GONE
-        // Access the views in your custom dialog layout
         val itemNameTextView = dialogView.findViewById<TextView>(R.id.dialogItemName)
         val timePrepTextView = dialogView.findViewById<TextView>(R.id.dialogTimePrep)
         val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
         val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
         val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogUtensilRequired)
-        val requestButton = dialogView.findViewById<Button>(R.id.requestButton)
+        val charityTextView = dialogView.findViewById<TextView>(R.id.dialogCharity) // Add TextView for charity
 
-        // Set data to the views
         itemNameTextView.text = data.itemName
         timePrepTextView.text = data.timeOfPreparation
         quantityTextView.text = data.quantity
         addressTextView.text = data.address
         utensilsRequiredTextView.text = data.utensilsRequired.toString()
-        val imageView = dialogView.findViewById<ImageView>(R.id.imahe) // ImageView in dialog
+        charityTextView.text = data.charity // Set charity name
+
+        val imageView = dialogView.findViewById<ImageView>(R.id.imahe)
 
         if (!data.imageUrl.isNullOrEmpty()) {
             Picasso.get()
                 .load(data.imageUrl)
-                .placeholder(R.drawable.healthshapers) // Placeholder image while loading
-                .error(R.drawable.healthshapers) // Error image if loading fails
+                .placeholder(R.drawable.healthshapers)
+                .error(R.drawable.healthshapers)
                 .into(imageView)
         } else {
-            // Load placeholder image if imageUrl is null or empty
             imageView.setImageResource(R.drawable.healthshapers)
         }
-        // Conditional visibility for the request button based on userType
-        Log.d(TAG, "Current User Type: $currentUserType")
-        if (currentUserType == "NGO") {
-            Log.d(TAG, "Setting button visibility to VISIBLE")
-            requestButton.visibility = View.VISIBLE
-            requestButton.setOnClickListener {
-                // Inflate or launch the Confirm_requests activity/fragment
-                val intent = Intent(requireContext(), Confirm_requests::class.java)
-                intent.putExtra("itemName", data.itemName)
-                intent.putExtra("timeOfPreparation", data.timeOfPreparation)
-                intent.putExtra("quantity", data.quantity)
-                intent.putExtra("address", data.address)
-                intent.putExtra("utensilsRequired", data.utensilsRequired)
-                intent.putExtra("imageUrl", data.imageUrl)
-                startActivity(intent)
-            }
-        } else {
-            Log.d(TAG, "Setting button visibility to GONE")
-            requestButton.visibility = View.GONE
-        }
 
-
-
-        // Create and show the dialog
         val dialogBuilder = AlertDialog.Builder(requireContext())
         dialogBuilder.setView(dialogView)
             .setTitle("Donation Details")
@@ -172,6 +145,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
             .create()
             .show()
     }
+
 
     companion object {
         private const val TAG = "Donation_List"
