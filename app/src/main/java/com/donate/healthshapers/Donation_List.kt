@@ -110,6 +110,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
     private fun showCustomDialog(data: DataClass) {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.yd_custom_dialogbox, null)
 
+        // Access other views in your custom dialog layout
         val itemNameTextView = dialogView.findViewById<TextView>(R.id.dialogItemName)
         val timePrepTextView = dialogView.findViewById<TextView>(R.id.dialogTimePrep)
         val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
@@ -117,7 +118,9 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogUtensilRequired)
         val charityTextView = dialogView.findViewById<TextView>(R.id.dialogCharity) // Add TextView for charity
         val requestButton = dialogView.findViewById<Button>(R.id.requestButton) // Request button
+        val deleteButton = dialogView.findViewById<Button>(R.id.deleteButton) // Delete button
 
+        // Set data to the views
         itemNameTextView.text = data.itemName
         timePrepTextView.text = data.timeOfPreparation
         quantityTextView.text = data.quantity
@@ -154,6 +157,11 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
             }
         } else {
             requestButton.visibility = View.GONE
+        }
+
+        // Hide the Delete Donation button when not on your_donations view
+        if (requireActivity() !is Your_donations) {
+            deleteButton.visibility = View.GONE
         }
 
         val dialogBuilder = AlertDialog.Builder(requireContext())
