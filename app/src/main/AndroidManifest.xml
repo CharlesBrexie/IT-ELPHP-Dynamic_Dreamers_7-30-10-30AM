@@ -64,6 +64,9 @@
             android:name=".NGO_Requests"
             android:exported="false" />
         <activity
+            android:name=".List_Requests"
+            android:exported="false" />
+        <activity
             android:name=".About_us"
             android:exported="false" />
         <activity

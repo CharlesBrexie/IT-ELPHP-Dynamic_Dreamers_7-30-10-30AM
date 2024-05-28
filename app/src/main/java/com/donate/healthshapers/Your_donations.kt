@@ -31,6 +31,8 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_your_donations)
 
+
+
         val ydBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
         ydBackButton.setOnClickListener {
             val intent = Intent(this, RestaurantFrontPage::class.java)
@@ -74,6 +76,7 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
 
         // Log the imageUrl from the clicked DataClass
         Log.d("ImageUrl", "Clicked item imageUrl: ${data.imageUrl}")
+
         showCustomDialog(data)
     }
 
@@ -162,6 +165,21 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
                     }
                 })
             }
+        }
+
+        val requestListButton = dialogView.findViewById<Button>(R.id.requestListButton)
+        requestListButton.setOnClickListener {
+            // Start the Confirm_requests activity
+            val intent = Intent(this@Your_donations, List_Requests::class.java)
+            // Pass any necessary data to the List_requests activity using intent extras
+            intent.putExtra("itemName", data.itemName)
+            intent.putExtra("timeOfPreparation", data.timeOfPreparation)
+            intent.putExtra("quantity", data.quantity)
+            intent.putExtra("address", data.address)
+            intent.putExtra("utensilsRequired", data.utensilsRequired)
+            intent.putExtra("imageUrl", data.imageUrl)
+            intent.putExtra("charity", data.charity)
+            startActivity(intent)
         }
 
         alertDialog.show()

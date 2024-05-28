@@ -37,6 +37,7 @@ class Confirm_requests : AppCompatActivity() {
 
         // Receive intent extras
         val itemName = intent.getStringExtra("itemName")
+        val charity = intent.getStringExtra("charity")
         val timeOfPreparation = intent.getStringExtra("timeOfPreparation")
         val quantity = intent.getStringExtra("quantity")
         val address = intent.getStringExtra("address")
@@ -59,6 +60,7 @@ class Confirm_requests : AppCompatActivity() {
             this.phoneNumber = phoneNumber
             this.email = email
             this.userType = userType
+            this.charity = charity
         }
 
         // Populate views with received data
@@ -66,6 +68,7 @@ class Confirm_requests : AppCompatActivity() {
         findViewById<TextView>(R.id.confirm_time).text = "Pickup before:" + data.timeOfPreparation
         findViewById<TextView>(R.id.confirm_quantity).text = "Quantity: " + data.quantity
         findViewById<TextView>(R.id.confirm_location).text = "Location: " + data.address
+        findViewById<TextView>(R.id.charity).text = "Charity: " + data.charity
         val imageView = findViewById<ImageView>(R.id.placeholder_image)
 
         // Load image URL using Picasso

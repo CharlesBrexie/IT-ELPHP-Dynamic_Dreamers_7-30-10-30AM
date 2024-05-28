@@ -16,7 +16,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="100dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="60dp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/roundedpfp"
                 android:layout_centerHorizontal="true">
@@ -216,6 +216,7 @@
                         android:text="Request"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
+                        android:background="@drawable/roundstyle"
                         android:visibility="gone"/>
                 </LinearLayout>
 
@@ -251,12 +252,44 @@
                 </LinearLayout>
 
             </RelativeLayout>
-            <Button
-                android:id="@+id/deleteButton"
+
+            <RelativeLayout
+                android:id="@+id/accept"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Delete Donation" />
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:layout_marginTop="20dp"
+                android:paddingVertical="10dp"
+                android:layout_below="@id/charityRelativeLayout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/deleteButton"
+                        android:layout_width="150dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/roundstyle"
+                        android:text="Delete" />
+                    <Button
+                        android:id="@+id/requestListButton"
+                        android:layout_width="150dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/roundstyle"
+                        android:text="Requests" />
+                </LinearLayout>
+
+            </RelativeLayout>
         </RelativeLayout>
+
+
     </ScrollView>
 
 

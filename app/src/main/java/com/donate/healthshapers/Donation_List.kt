@@ -153,6 +153,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
                 intent.putExtra("address", data.address)
                 intent.putExtra("utensilsRequired", data.utensilsRequired)
                 intent.putExtra("imageUrl", data.imageUrl)
+                intent.putExtra("charity", data.charity)
                 startActivity(intent)
             }
         } else {

@@ -11,5 +11,6 @@ class DataClass {
     var phoneNumber: String? = null
     var email: String? = ""
     var userType: String? = ""
+    var pfp: String? = ""
     var charity: String? = null // Add charity property
 }
