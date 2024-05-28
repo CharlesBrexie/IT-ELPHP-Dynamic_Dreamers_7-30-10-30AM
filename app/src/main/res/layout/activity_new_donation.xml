@@ -136,6 +136,16 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColorHint="#2F2F2F"
             android:textSize="15sp" />
+        <Spinner
+            android:id="@+id/charitySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:fontFamily="@font/dmsans_reg"
+            android:padding="10dp"
+            android:textColorHint="#2F2F2F"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout

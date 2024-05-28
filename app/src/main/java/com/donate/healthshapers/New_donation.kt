@@ -1,18 +1,12 @@
 package com.donate.healthshapers
 
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -23,10 +17,11 @@ class New_donation : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val PICK_IMAGE_REQUEST = 1
     private lateinit var photoImageView: ImageView
-    var selectedImageUri: Uri? = null
+    private var selectedImageUri: Uri? = null
     private var imageUrl: String? = null
 
     private lateinit var submitButton: Button
+    private lateinit var charitySpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +32,13 @@ class New_donation : AppCompatActivity() {
         val addPhotoButton = findViewById<Button>(R.id.add_photo)
         photoImageView = findViewById(R.id.photoImageView)
         submitButton = findViewById(R.id.submit_new_donation)
+        charitySpinner = findViewById(R.id.charitySpinner)
+
+        val charityOptions =
+            arrayOf("Select Charity", "Cross Catholic", "CARE Philippines", "PAC Canada")
+        val adapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, charityOptions)
+        charitySpinner.adapter = adapter
 
         addPhotoButton.setOnClickListener {
             openGallery()
@@ -49,7 +51,13 @@ class New_donation : AppCompatActivity() {
         }
 
         submitButton.setOnClickListener {
-            uploadImageAndSaveDonation()
+            if (charitySpinner.selectedItemPosition == 0) {
+                // No charity selected, show toast message
+                Toast.makeText(this, "Please choose a charity", Toast.LENGTH_SHORT).show()
+            } else {
+                // Charity selected, proceed to save donation
+                saveDonation()
+            }
         }
     }
 
@@ -63,51 +71,14 @@ class New_donation : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST) {
             if (resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-                // User selected an image
                 selectedImageUri = data.data
                 photoImageView.setImageURI(selectedImageUri)
                 photoImageView.visibility = ImageView.VISIBLE
             } else {
-                // User canceled the inputting
                 selectedImageUri = null
                 photoImageView.visibility = ImageView.GONE
                 Toast.makeText(this, "Input canceled", Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    private fun uploadImageAndSaveDonation() {
-        if (selectedImageUri != null) {
-            val storageReference =
-                FirebaseStorage.getInstance().getReference().child(UUID.randomUUID().toString())
-            val uploadTask = storageReference.putFile(selectedImageUri!!)
-
-            uploadTask.addOnSuccessListener { taskSnapshot ->
-                // Get the download URL for the uploaded image
-                storageReference.downloadUrl.addOnSuccessListener { uri ->
-                    imageUrl = uri.toString()
-                    saveDonation()
-                }.addOnFailureListener { exception ->
-                    // Handle failure to get download URL
-                    Log.e(TAG, "Failed to get download URL: $exception")
-                    Toast.makeText(
-                        this@New_donation,
-                        "Failed to get download URL",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }.addOnFailureListener { exception ->
-                // Handle failure of the upload task
-                Log.e(TAG, "File upload failed: $exception")
-                Toast.makeText(this@New_donation, "File Upload Failed...", Toast.LENGTH_LONG).show()
-            }.addOnCanceledListener {
-                // Handle cancellation of the upload task
-                Log.e(TAG, "File upload canceled")
-                Toast.makeText(this@New_donation, "File Upload Canceled...", Toast.LENGTH_LONG)
-                    .show()
-            }
-        } else {
-            saveDonation()
         }
     }
 
@@ -121,45 +92,84 @@ class New_donation : AppCompatActivity() {
         val donationId = UUID.randomUUID().toString() // Generate unique donation ID
         val userId = auth.currentUser?.uid
 
-        // Check if all required fields are filled
-        if (itemName.isNotEmpty() && timeOfPreparation.isNotEmpty() && quantity.isNotEmpty() && address.isNotEmpty()) {
+        // Get selected charity from Spinner
+        val selectedCharity = charitySpinner.selectedItem.toString()
+
+        // Check if all required fields are filled and a charity is selected
+        if (itemName.isNotEmpty() && timeOfPreparation.isNotEmpty() && quantity.isNotEmpty() && address.isNotEmpty() && selectedCharity != "Select Charity") {
             if (userId != null) {
                 val donationRef =
                     FirebaseDatabase.getInstance().getReference("donations").child(userId)
                         .child(donationId)
-                val donationData = HashMap<String, Any>()
-                donationData["itemName"] = itemName
-                donationData["timeOfPreparation"] = timeOfPreparation
-                donationData["quantity"] = quantity
-                donationData["address"] = address
-                donationData["utensilsRequired"] = utensilsRequired
-                donationData["imageUrl"] = imageUrl.toString()
+                val donationData = hashMapOf<String, Any>(
+                    "itemName" to itemName,
+                    "timeOfPreparation" to timeOfPreparation,
+                    "quantity" to quantity,
+                    "address" to address,
+                    "utensilsRequired" to utensilsRequired,
+                    "charity" to selectedCharity
+                )
 
-                donationRef.setValue(donationData)
-                    .addOnSuccessListener {
-                        // Donation saved successfully
+                // Upload image to Firebase Storage
+                if (selectedImageUri != null) {
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val imageRef = storageRef.child("images/${UUID.randomUUID()}")
+                    val uploadTask = imageRef.putFile(selectedImageUri!!)
+
+                    uploadTask.addOnSuccessListener { taskSnapshot ->
+                        // Image uploaded successfully, get the download URL
+                        imageRef.downloadUrl.addOnSuccessListener { uri ->
+                            // Set imageUrl to the download URL
+                            donationData["imageUrl"] = uri.toString()
+
+                            // Save donation data to Firebase Realtime Database
+                            donationRef.setValue(donationData)
+                                .addOnSuccessListener {
+                                    // Donation saved successfully
+                                    Toast.makeText(
+                                        this@New_donation,
+                                        "Donation Data Successfully Saved",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    val intent = Intent(this, Your_donations::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                .addOnFailureListener {
+                                    // Failed to save donation
+                                    Toast.makeText(
+                                        this@New_donation,
+                                        "Donation Data Saving Failed",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    // Handle the error
+                                }
+                        }
+                    }.addOnFailureListener {
+                        // Failed to upload image
                         Toast.makeText(
                             this@New_donation,
-                            "Donation Data Successfully Saved",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        val intent = Intent(this, Your_donations::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    .addOnFailureListener {
-                        // Failed to save donation
-                        Toast.makeText(
-                            this@New_donation,
-                            "Donation Data Saving Failed",
+                            "Failed to upload image",
                             Toast.LENGTH_LONG
                         ).show()
                         // Handle the error
                     }
+                } else {
+                    // No image selected
+                    Toast.makeText(
+                        this@New_donation,
+                        "Please select an image",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         } else {
-            // Notify user to fill in all fields
-            Toast.makeText(this@New_donation, "Please fill in all fields", Toast.LENGTH_SHORT)
+            // Notify user to fill in all fields and choose a charity
+            Toast.makeText(
+                this@New_donation,
+                "Please fill in all fields and choose a charity",
+                Toast.LENGTH_SHORT
+            )
                 .show()
         }
     }
