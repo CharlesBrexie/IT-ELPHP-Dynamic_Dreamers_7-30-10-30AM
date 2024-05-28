@@ -86,6 +86,8 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
         val quantityTextView = dialogView.findViewById<TextView>(R.id.dialogQuantity)
         val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
         val utensilsReqTextView = dialogView.findViewById<TextView>(R.id.dialogUtensilRequired)
+        val charityTextView =
+            dialogView.findViewById<TextView>(R.id.dialogCharity) // New TextView for charity
 
         // Set data to the views
         itemNameTextView.text = data.itemName
@@ -93,6 +95,7 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
         quantityTextView.text = data.quantity
         addressTextView.text = data.address
         utensilsReqTextView.text = data.utensilsRequired.toString()
+        charityTextView.text = data.charity // Set charity name
 
         // Set other data to other views...
 
