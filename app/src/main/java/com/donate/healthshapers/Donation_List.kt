@@ -116,6 +116,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
         val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogUtensilRequired)
         val charityTextView = dialogView.findViewById<TextView>(R.id.dialogCharity) // Add TextView for charity
+        val requestButton = dialogView.findViewById<Button>(R.id.requestButton) // Request button
 
         itemNameTextView.text = data.itemName
         timePrepTextView.text = data.timeOfPreparation
@@ -134,6 +135,25 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
                 .into(imageView)
         } else {
             imageView.setImageResource(R.drawable.healthshapers)
+        }
+
+        // Conditional visibility for the request button based on userType
+        if (currentUserType == "NGO") {
+            requestButton.visibility = View.VISIBLE
+            requestButton.setOnClickListener {
+                // Start the Confirm_requests activity
+                val intent = Intent(requireContext(), Confirm_requests::class.java)
+                // Pass any necessary data to the Confirm_requests activity using intent extras
+                intent.putExtra("itemName", data.itemName)
+                intent.putExtra("timeOfPreparation", data.timeOfPreparation)
+                intent.putExtra("quantity", data.quantity)
+                intent.putExtra("address", data.address)
+                intent.putExtra("utensilsRequired", data.utensilsRequired)
+                intent.putExtra("imageUrl", data.imageUrl)
+                startActivity(intent)
+            }
+        } else {
+            requestButton.visibility = View.GONE
         }
 
         val dialogBuilder = AlertDialog.Builder(requireContext())
