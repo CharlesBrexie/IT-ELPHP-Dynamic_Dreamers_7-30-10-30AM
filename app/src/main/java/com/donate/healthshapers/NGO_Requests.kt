@@ -86,6 +86,8 @@ class NGO_Requests : AppCompatActivity(),  AdapterClass.OnItemClickListener{
         val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogUtensilRequired)
         val deleteButton = dialogView.findViewById<TextView>(R.id.deleteButton)
         deleteButton.visibility = View.GONE
+        val requestListButton = dialogView.findViewById<TextView>(R.id.requestListButton)
+        requestListButton.visibility = View.GONE
         // Set data to the views
         itemNameTextView.text = data.itemName
         timePrepTextView.text = data.timeOfPreparation
