@@ -90,6 +90,7 @@ class New_donation : AppCompatActivity() {
         val utensilsRequired =
             findViewById<RadioGroup>(R.id.required).checkedRadioButtonId == R.id.yes
         val donationId = UUID.randomUUID().toString() // Generate unique donation ID
+        val auth = FirebaseAuth.getInstance()
         val userId = auth.currentUser?.uid
 
         // Get selected charity from Spinner
@@ -102,12 +103,14 @@ class New_donation : AppCompatActivity() {
                     FirebaseDatabase.getInstance().getReference("donations").child(userId)
                         .child(donationId)
                 val donationData = hashMapOf<String, Any>(
+                    "donationId" to donationId, // Include donation ID in donation data
                     "itemName" to itemName,
                     "timeOfPreparation" to timeOfPreparation,
                     "quantity" to quantity,
                     "address" to address,
                     "utensilsRequired" to utensilsRequired,
-                    "charity" to selectedCharity
+                    "charity" to selectedCharity,
+                    "userId" to userId // Include user ID in donation data
                 )
 
                 // Upload image to Firebase Storage
@@ -169,8 +172,7 @@ class New_donation : AppCompatActivity() {
                 this@New_donation,
                 "Please fill in all fields and choose a charity",
                 Toast.LENGTH_SHORT
-            )
-                .show()
+            ).show()
         }
     }
 }

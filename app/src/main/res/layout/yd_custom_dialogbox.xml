@@ -254,6 +254,37 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/donationIdRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/charityRelativeLayout"
+                android:paddingVertical="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="70dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Donation ID"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/dialogDonationID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CARE Philippines"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/accept"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -262,7 +293,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:layout_marginTop="20dp"
                 android:paddingVertical="10dp"
-                android:layout_below="@id/charityRelativeLayout">
+                android:layout_below="@id/donationIdRelativeLayout">
 
                 <LinearLayout
                     android:layout_width="match_parent"

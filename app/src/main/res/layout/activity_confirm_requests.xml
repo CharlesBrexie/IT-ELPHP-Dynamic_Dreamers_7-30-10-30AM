@@ -129,6 +129,17 @@
                     android:textSize="15sp"
                     android:id="@+id/charity"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/fonttop"
+                    android:text="Donation ID: "
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:id="@+id/donationId"
+                    />
 
 
 

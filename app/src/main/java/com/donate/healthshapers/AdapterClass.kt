@@ -38,6 +38,7 @@ class AdapterClass(private val userList: ArrayList<DataClass>,
         Log.d("ImageUrl", "Current item imageUrl: ${currentItem.imageUrl}")
 
         // Bind other data
+        holder.donationId.text = currentItem.donationId.toString()
         holder.itemName.text = currentItem.itemName.toString()
         holder.timeOfPreparation.text = currentItem.timeOfPreparation.toString()
         holder.quantity.text = currentItem.quantity.toString()
@@ -75,6 +76,7 @@ class AdapterClass(private val userList: ArrayList<DataClass>,
         val address : TextView = itemView.findViewById(R.id.ADaddress)
         val utensilsRequired : TextView = itemView.findViewById(R.id.ADutensilsRequired)
         val imageView : ImageView = itemView.findViewById(R.id.ADimage)
+        val donationId : TextView = itemView.findViewById(R.id.ADdontaionId)
     }
 
     interface OnItemClickListener {

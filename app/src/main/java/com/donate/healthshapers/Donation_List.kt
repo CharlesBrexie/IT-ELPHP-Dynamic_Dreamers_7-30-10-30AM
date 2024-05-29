@@ -117,6 +117,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         val addressTextView = dialogView.findViewById<TextView>(R.id.dialogAddress)
         val utensilsRequiredTextView = dialogView.findViewById<TextView>(R.id.dialogUtensilRequired)
         val charityTextView = dialogView.findViewById<TextView>(R.id.dialogCharity) // Add TextView for charity
+        val donationIdTextView = dialogView.findViewById<TextView>(R.id.dialogDonationID)
         val requestButton = dialogView.findViewById<Button>(R.id.requestButton) // Request button
         val deleteButton = dialogView.findViewById<Button>(R.id.deleteButton) // Delete button
 
@@ -127,7 +128,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
         addressTextView.text = data.address
         utensilsRequiredTextView.text = data.utensilsRequired.toString()
         charityTextView.text = data.charity // Set charity name
-
+        donationIdTextView.text = data.donationId
         val imageView = dialogView.findViewById<ImageView>(R.id.imahe)
 
         if (!data.imageUrl.isNullOrEmpty()) {
@@ -154,6 +155,7 @@ class Donation_List : Fragment(R.layout.fragment_donation_list), AdapterClass.On
                 intent.putExtra("utensilsRequired", data.utensilsRequired)
                 intent.putExtra("imageUrl", data.imageUrl)
                 intent.putExtra("charity", data.charity)
+                intent.putExtra("donationId", data.donationId)
                 startActivity(intent)
             }
         } else {

@@ -32,8 +32,7 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
         setContentView(R.layout.activity_your_donations)
 
 
-
-        val ydBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
+        val ydBackButton = findViewById<ImageButton>(R.id.new_donations_back_button)
         ydBackButton.setOnClickListener {
             val intent = Intent(this, RestaurantFrontPage::class.java)
             startActivity(intent)
@@ -92,6 +91,8 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
         val charityTextView =
             dialogView.findViewById<TextView>(R.id.dialogCharity) // New TextView for charity
 
+        val donationIdTextView = dialogView.findViewById<TextView>(R.id.dialogDonationID)
+
         // Set data to the views
         itemNameTextView.text = data.itemName
         timeOfPrepTextView.text = data.timeOfPreparation
@@ -99,6 +100,7 @@ class Your_donations : AppCompatActivity(),  AdapterClass.OnItemClickListener {
         addressTextView.text = data.address
         utensilsReqTextView.text = data.utensilsRequired.toString()
         charityTextView.text = data.charity // Set charity name
+        donationIdTextView.text = data.donationId
 
         // Set other data to other views...
 

@@ -32,7 +32,7 @@ class NGO_Requests : AppCompatActivity(),  AdapterClass.OnItemClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ngo_requests)
 
-        val ydBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
+        val ydBackButton = findViewById<ImageButton>(R.id.new_donations_back_button)
         ydBackButton.setOnClickListener {
             val intent = Intent(this, NgoFrontPage::class.java)
             startActivity(intent)

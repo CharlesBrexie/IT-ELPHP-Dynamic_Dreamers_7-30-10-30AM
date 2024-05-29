@@ -47,6 +47,7 @@ class Confirm_requests : AppCompatActivity() {
         val phoneNumber = intent.getStringExtra("phoneNumber")
         val email = intent.getStringExtra("email") ?: ""
         val userType = intent.getStringExtra("userType") ?: ""
+        val donationId = intent.getStringExtra("donationId") ?:""
 
         // Create a DataClass instance and assign values
         val data = DataClass().apply {
@@ -61,6 +62,7 @@ class Confirm_requests : AppCompatActivity() {
             this.email = email
             this.userType = userType
             this.charity = charity
+            this.donationId = donationId
         }
 
         // Populate views with received data
@@ -69,6 +71,7 @@ class Confirm_requests : AppCompatActivity() {
         findViewById<TextView>(R.id.confirm_quantity).text = "Quantity: " + data.quantity
         findViewById<TextView>(R.id.confirm_location).text = "Location: " + data.address
         findViewById<TextView>(R.id.charity).text = "Charity: " + data.charity
+        findViewById<TextView>(R.id.donationId).text = "Donation ID: " + data.donationId
         val imageView = findViewById<ImageView>(R.id.placeholder_image)
 
         // Load image URL using Picasso
@@ -96,24 +99,80 @@ class Confirm_requests : AppCompatActivity() {
         val userId = auth.currentUser?.uid
         // Initialize Firebase database reference
         val database = FirebaseDatabase.getInstance()
-        // Get a reference to the "NGO Confirmed Donations" node
-        val reference = database.getReference("NGO Confirmed Donations")
-        // Generate a unique key for the donation
-        val donationKey = reference.push().key
+
+        // Save the confirmed donation to "NGO Confirmed Donations"
+        val confirmedDonationsRef = database.getReference("NGO Confirmed Donations")
+
+        // Generate a unique key for the confirmed donation
+        val donationKey = confirmedDonationsRef.push().key
+
         // Save the data to Firebase under the user's ID
-        if (donationKey != null) {
-            if (userId != null) {
-                reference.child(userId).child(donationKey).setValue(data)
-                    .addOnSuccessListener {
-                        Log.d(TAG, "Data saved to Firebase successfully")
-                    }
-                    .addOnFailureListener {
-                        Log.e(TAG, "Error saving data to Firebase", it)
-                        Toast.makeText( this, "Error saving data to Firebase", Toast.LENGTH_LONG).show()
-                    }
-            }
+        if (donationKey != null && userId != null) {
+            // Set the status field to "Pending" when saving data
+            data.status = "Pending"
+            confirmedDonationsRef.child(userId).child(donationKey).setValue(data)
+                .addOnSuccessListener {
+                    Log.d(TAG, "Confirmed donation saved to Firebase successfully")
+
+                    // After saving the confirmed donation, save the request details
+                    saveRequestToFirebase(userId, donationKey, data.donationId.toString())
+                }
+                .addOnFailureListener {
+                    Log.e(TAG, "Error saving confirmed donation to Firebase", it)
+                    Toast.makeText( this, "Error saving confirmed donation to Firebase", Toast.LENGTH_LONG).show()
+                }
         } else {
-            Log.e(TAG, "Error generating donation key")
+            Log.e(TAG, "Error generating donation key or user ID is null")
+        }
+    }
+
+    private fun saveRequestToFirebase(ngoId: String, donationKey: String, donationId: String) {
+        // Initialize Firebase database reference
+        val database = FirebaseDatabase.getInstance()
+
+        // Save the request details to "Requests"
+        val requestsRef = database.getReference("Requests")
+
+        // Generate a unique key for the request
+        val requestKey = requestsRef.push().key
+
+        // Save the request details to Firebase
+        if (requestKey != null) {
+            // Retrieve user information from the "Users" node
+            val usersRef = database.getReference("users").child(ngoId)
+            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val username = dataSnapshot.child("name").getValue(String::class.java)
+                    val userType = dataSnapshot.child("userType").getValue(String::class.java)
+                    val phoneNumber = dataSnapshot.child("phoneNumber").getValue(String::class.java)
+
+                    // Create request data map
+                    val requestData = mapOf(
+                        "ngoId" to ngoId,
+                        "donationId" to donationId,
+                        "status" to "Pending",
+                        "username" to username,
+                        "userType" to userType,
+                        "phoneNumber" to phoneNumber
+                    )
+
+                    // Save request data to Firebase
+                    requestsRef.child(requestKey).setValue(requestData)
+                        .addOnSuccessListener {
+                            Log.d(TAG, "Request saved to Firebase successfully")
+                        }
+                        .addOnFailureListener {
+                            Log.e(TAG, "Error saving request to Firebase", it)
+                            Toast.makeText(this@Confirm_requests, "Error saving request to Firebase", Toast.LENGTH_LONG).show()
+                        }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.e(TAG, "Error reading user data from Firebase", databaseError.toException())
+                }
+            })
+        } else {
+            Log.e(TAG, "Error generating request key")
         }
     }
 }

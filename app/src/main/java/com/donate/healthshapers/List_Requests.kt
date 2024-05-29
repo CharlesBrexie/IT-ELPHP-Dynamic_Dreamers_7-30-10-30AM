@@ -1,29 +1,37 @@
 package com.donate.healthshapers
 
+import RequestAdapterClass
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.database.*
-import com.squareup.picasso.Picasso
 
 class List_Requests : AppCompatActivity(), RequestAdapterClass.OnItemClickListener {
 
+    private lateinit var auth: FirebaseAuth
     private lateinit var dbref: DatabaseReference
     private lateinit var userRecyclerview: RecyclerView
-    private lateinit var userArrayList: ArrayList<DataClass>
     private lateinit var requestsAdapter: RequestAdapterClass
+    private lateinit var userDonationIds: List<String> // Store user's donation IDs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_requests)
+
+        auth = Firebase.auth
 
         val ydBackButton = findViewById<ImageButton>(R.id.front_page_back_button)
         ydBackButton.setOnClickListener {
@@ -31,104 +39,81 @@ class List_Requests : AppCompatActivity(), RequestAdapterClass.OnItemClickListen
             startActivity(intent)
         }
 
-        // Receive intent extras
-        val itemName = intent.getStringExtra("itemName")
-        val charity = intent.getStringExtra("charity")
-        val timeOfPreparation = intent.getStringExtra("timeOfPreparation")
-        val quantity = intent.getStringExtra("quantity")
-        val address = intent.getStringExtra("address")
-        val utensilsRequired = intent.getBooleanExtra("utensilsRequired", false)
-        val imageUrl = intent.getStringExtra("imageUrl") ?: ""
-
-        // Create a DataClass instance and assign values
-        val clickedDonation = DataClass().apply {
-            this.itemName = itemName
-            this.timeOfPreparation = timeOfPreparation
-            this.quantity = quantity
-            this.address = address
-            this.utensilsRequired = utensilsRequired
-            this.imageUrl = imageUrl
-            this.charity = charity
-        }
-
         userRecyclerview = findViewById(R.id.listRequestRecycler)
         userRecyclerview.layoutManager = LinearLayoutManager(this)
-        userRecyclerview.setHasFixedSize(true)
-        userArrayList = arrayListOf<DataClass>()
-
-        // Set up the RecyclerView adapter
-        requestsAdapter = RequestAdapterClass(userArrayList, this)
+        requestsAdapter = RequestAdapterClass(ArrayList(), this)
         userRecyclerview.adapter = requestsAdapter
 
-        // Fetch confirmed donations that match the clicked donation details
-        fetchConfirmedDonations(clickedDonation)
+        // Fetch user's donation IDs from Firebase
+        fetchUserDonationIds()
     }
 
-    private fun fetchConfirmedDonations(clickedDonation: DataClass?) {
-        clickedDonation?.let {
-            dbref = FirebaseDatabase.getInstance().getReference("NGO_Confirmed_donations")
+    private fun fetchUserDonationIds() {
+        val userId = auth.currentUser?.uid
+        userId?.let { uid ->
+            // Initialize database reference for user's donations
+            val userDonationRef = FirebaseDatabase.getInstance().getReference("donations").child(uid)
 
-            dbref.addValueEventListener(object : ValueEventListener {
+            // Fetch user's donation IDs
+            userDonationRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val matchingDonations = ArrayList<DataClass>()
-                    for (donationSnapshot in snapshot.children) {
-                        val donation = donationSnapshot.getValue(DataClass::class.java)
-                        donation?.let {
-                            if (it.itemName == clickedDonation.itemName &&
-                                it.timeOfPreparation == clickedDonation.timeOfPreparation &&
-                                it.quantity == clickedDonation.quantity &&
-                                it.address == clickedDonation.address &&
-                                it.utensilsRequired == clickedDonation.utensilsRequired &&
-                                it.charity == clickedDonation.charity
-                            ) {
-                                matchingDonations.add(it)
-                            }
+                    // Retrieve user's donation IDs and store them
+                    val userDonationIds = mutableListOf<String>()
+                    snapshot.children.forEach { donationSnapshot ->
+                        donationSnapshot.key?.let { donationId ->
+                            userDonationIds.add(donationId)
                         }
                     }
-                    // Update the adapter with the fetched data
-                    requestsAdapter.updateData(matchingDonations)
+
+                    // After fetching user's donation IDs, fetch request data
+                    fetchRequestData(userDonationIds)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    Log.e(TAG, "Failed to read user's donation IDs from Firebase: ${error.message}")
                 }
             })
         }
     }
 
+    private fun fetchRequestData(userDonationIds: List<String>) {
+        dbref = FirebaseDatabase.getInstance().getReference("Requests")
 
-    override fun onItemClick(data: DataClass) {
-        Log.d("ItemClick", "Item clicked: ${data.itemName}")
+        // Fetch request data from Firebase
+        dbref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val requests = mutableListOf<RequestData>()
 
-        // Log the imageUrl from the clicked DataClass
-        Log.d("ImageUrl", "Clicked item imageUrl: ${data.imageUrl}")
-        showCustomDialog(data)
+                // Iterate through request data
+                for (requestSnapshot in snapshot.children) {
+                    val requestData = requestSnapshot.getValue(RequestData::class.java)
+                    requestData?.let {
+                        // If the request's donation ID is in the user's donation IDs, add it to the list
+                        if (userDonationIds.contains(requestData.donationId)) {
+                            requests.add(requestData)
+                        }
+                    }
+                    // Log here to check if requestData is not null
+                    Log.d(TAG, "RequestData: $requestData")
+                }
+                // Update RecyclerView with filtered requests
+                requestsAdapter.updateData(requests as ArrayList<RequestData>)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, "Failed to read request data from Firebase: ${error.message}")
+            }
+        })
     }
-
-    private fun showCustomDialog(data: DataClass) {
+    private fun showCustomDialog(data: RequestData) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.rl_custom_dialogbox, null)
-
         // Access the views in your custom dialog layout
         val userNameTextView = dialogView.findViewById<TextView>(R.id.dialogUserName)
         val userTypeTextView = dialogView.findViewById<TextView>(R.id.dialogUserType)
         val phoneNumTextView = dialogView.findViewById<TextView>(R.id.dialogPhoneNum)
-
-        userNameTextView.text = data.itemName
-        userTypeTextView.text = data.timeOfPreparation
-        phoneNumTextView.text = data.quantity
-
-        val imageView = dialogView.findViewById<ImageView>(R.id.pfp) // ImageView in dialog
-
-        // Load image using Picasso library
-        if (!data.imageUrl.isNullOrEmpty()) {
-            Picasso.get()
-                .load(data.imageUrl)
-                .placeholder(R.drawable.pfp) // Placeholder image while loading
-                .error(R.drawable.pfp) // Error image if loading fails
-                .into(imageView)
-        } else {
-            // Load placeholder image if imageUrl is null or empty
-            imageView.setImageResource(R.drawable.pfp)
-        }
+        userNameTextView.text = data.username
+        userTypeTextView.text = data.userType
+        phoneNumTextView.text = data.phoneNumber
 
         // Create and show the dialog
         val dialogBuilder = AlertDialog.Builder(this)
@@ -140,5 +125,76 @@ class List_Requests : AppCompatActivity(), RequestAdapterClass.OnItemClickListen
             .create()
 
         alertDialog.show()
+
+        val acceptBtn = dialogView.findViewById<Button>(R.id.acceptButton)
+        acceptBtn.setOnClickListener {
+            // Update the status in the NGO Confirmed Donation and Requests nodes
+            updateStatusInFirebase(data)
+
+            // Start Your_donations activity
+            val intent = Intent(this, Your_donations::class.java)
+            startActivity(intent)
+
+            // Dismiss the dialog
+            alertDialog.dismiss()
+
+        }
+    }
+
+    private fun updateStatusInFirebase(data: RequestData) {
+        updateNGOConfirmedDonationStatus(data)
+        updateRequestStatus(data)
+    }
+
+    private fun updateNGOConfirmedDonationStatus(data: RequestData) {
+        val ngoConfirmedDonationRef = FirebaseDatabase.getInstance().getReference("NGO Confirmed Donations")
+        ngoConfirmedDonationRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { userSnapshot ->
+                    userSnapshot.children.forEach { donationSnapshot ->
+                        if (donationSnapshot.child("donationId").getValue(String::class.java) == data.donationId) {
+                            donationSnapshot.ref.child("status").setValue("Confirmed")
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, "Failed to update status in NGO Confirmed Donation: ${error.message}")
+            }
+        })
+    }
+
+    private fun updateRequestStatus(data: RequestData){
+        val requestsRef = FirebaseDatabase.getInstance().getReference("Requests")
+
+        // Query the "Requests" node to find the entry with matching donationId
+        val query = requestsRef.orderByChild("donationId").equalTo(data.donationId)
+
+        // Execute the query
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Check if the snapshot has any matching entry
+                if (snapshot.exists()) {
+                    // Loop through each matching entry (although there should be only one)
+                    for (requestSnapshot in snapshot.children) {
+                        // Update the status to "confirmed"
+                        requestSnapshot.ref.child("status").setValue("Confirmed")
+                    }
+                } else {
+                    // Handle the case where no matching entry is found
+                    Log.d(TAG, "No matching entry found in Requests for donationId: ${data.donationId}")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, "Failed to update status in Requests: ${error.message}")
+            }
+        })
+    }
+
+    override fun onItemClick(data: RequestData) {
+        Log.d(TAG, "Item clicked: $data")
+        showCustomDialog(data)
     }
 }
