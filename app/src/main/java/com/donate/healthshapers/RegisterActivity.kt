@@ -4,32 +4,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
+    private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Initialize Firebase Auth
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance().reference
+        dbHelper = DatabaseHelper(this)
 
         val submitButton = findViewById<Button>(R.id.submit)
         submitButton.setOnClickListener {
-            // Get user input
             val name = findViewById<EditText>(R.id.name).text.toString()
             val phoneNumber = findViewById<EditText>(R.id.phoneNumber).text.toString()
             val email = findViewById<EditText>(R.id.Email).text.toString()
@@ -43,97 +36,50 @@ class RegisterActivity : AppCompatActivity() {
 
             // Check if all fields are filled
             if (name.isNotEmpty() && phoneNumber.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                // All fields are filled, continue with registration process
-
                 // Check if email already exists
-                checkIfEmailExists(email) { emailExists ->
-                    if (!emailExists) {
-                        // Register the user in Firebase Authentication
-                        auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(this) { task ->
-                                if (task.isSuccessful) {
-                                    // Registration successful
-                                    val user = User(name, phoneNumber, email, userType)
-                                    database.child("users").child(auth.currentUser!!.uid)
-                                        .setValue(user)
-                                        .addOnCompleteListener { databaseTask ->
-                                            if (databaseTask.isSuccessful) {
-                                                // Registration and data save successful
-                                                val intent = Intent(this, SigninActivity::class.java)
-                                                startActivity(intent)
-                                            } else {
-                                                // Error saving data
-                                                // You can handle this according to your app's logic
-                                                Log.e("RegisterActivity", "Error saving data: ${databaseTask.exception}")
-                                            }
-                                        }
-                                } else {
-                                    // Registration failed
-                                    val exception = task.exception
-                                    Log.e("RegisterActivity", "Sign-up failed", exception)
-                                    // Display an error message to the user or handle the error accordingly
-                                    Toast.makeText(this, "Registration failed: ${exception?.message}", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                    } else {
-                        // Email already exists, display message to the user
-                        Toast.makeText(this, "The email is already in use.", Toast.LENGTH_SHORT).show()
+                if (!dbHelper.isEmailExists(email)) {
+                    // Create DataClass object
+                    val user = DataClass().apply {
+                        this.name = name
+                        this.phoneNumber = phoneNumber
+                        this.email = email
+                        this.userType = userType
+                        this.pfp = "" // You can add default profile picture URL or set it from input
                     }
+
+                    // Save user to SQLite
+                    if (dbHelper.addUser(user)) {
+                        Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, SigninActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "The email is already in use.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                // Some fields are empty, display a message to the user
                 Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
             }
         }
 
-        val mySigninButton = findViewById<Button>(R.id.mySigninButton)
-        mySigninButton.setOnClickListener {
-            val intent = Intent(this, SigninActivity::class.java)
-            startActivity(intent)
+        // Sign-in button
+        findViewById<Button>(R.id.mySigninButton).setOnClickListener {
+            startActivity(Intent(this, SigninActivity::class.java))
         }
 
-        // Set up password visibility toggle
+        // Toggle password visibility
         val passwordEditText = findViewById<EditText>(R.id.Password)
         val togglePasswordVisibilityButton = findViewById<ImageButton>(R.id.togglePasswordVisibility)
-
-        // Set OnClickListener on the toggle button
         togglePasswordVisibilityButton.setOnClickListener {
-            // Toggle password visibility
             if (passwordEditText.transformationMethod == PasswordTransformationMethod.getInstance()) {
-                // Show password
                 passwordEditText.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                togglePasswordVisibilityButton.setImageResource(R.drawable.ic_hide) // Set your hide icon drawable
+                togglePasswordVisibilityButton.setImageResource(R.drawable.ic_hide)
             } else {
-                // Hide password
                 passwordEditText.transformationMethod = PasswordTransformationMethod.getInstance()
-                togglePasswordVisibilityButton.setImageResource(R.drawable.ic_show) // Set your show icon drawable
+                togglePasswordVisibilityButton.setImageResource(R.drawable.ic_show)
             }
-
-            // Move cursor to the end of the text
             passwordEditText.setSelection(passwordEditText.text.length)
         }
     }
-
-    private fun checkIfEmailExists(email: String, callback: (Boolean) -> Unit) {
-        val query: Query = database.child("users").orderByChild("email").equalTo(email)
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                callback(dataSnapshot.exists())
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                callback(false)
-            }
-        })
-    }
-}
-
-data class User(
-    val name: String = "",
-    val phoneNumber: String = "",
-    val email: String = "",
-    val userType: String = "",
-    val pfp: String = ""
-) {
-
 }

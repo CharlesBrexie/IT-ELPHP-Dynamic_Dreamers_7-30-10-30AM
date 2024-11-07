@@ -31,6 +31,7 @@ class Settings : Fragment(R.layout.fragment_settings) {
         database = FirebaseDatabase.getInstance().reference
         myProfilePic = view.findViewById(R.id.myProfilePic)
         val userTypeText = view.findViewById<TextView>(R.id.userType)
+
         // Initialize views and set click listeners
         val abtUsBtn = view.findViewById<LinearLayout>(R.id.about)
         abtUsBtn.setOnClickListener {
@@ -54,7 +55,9 @@ class Settings : Fragment(R.layout.fragment_settings) {
             startActivity(intent)
             activity?.finish()
         }
+
         val usernameEditText = view.findViewById<TextView>(R.id.userNameMain)
+
         // Fetch user data from Realtime Database
         val userId = auth.currentUser?.uid
         if (userId != null) {
@@ -62,26 +65,25 @@ class Settings : Fragment(R.layout.fragment_settings) {
                 ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        val user = dataSnapshot.getValue(User::class.java)
+                        val user = dataSnapshot.getValue(DataClass::class.java)
                         if (user != null) {
                             usernameEditText.text = user.name
                             userTypeText.text = user.userType
 
-                            if(user.userType=="NGO") {
+                            if (user.userType == "NGO") {
                                 userTypeText.text = "Non Governmental Organization"
                             }
 
                             // Load profile picture if available
-                            if (!user.pfp.isNullOrEmpty()) {
-                                loadProfilePicture(user.pfp)
+                            val profilePictureUrl = user.pfp
+                            if (!profilePictureUrl.isNullOrEmpty()) {
+                                loadProfilePicture(profilePictureUrl)
                             }
                         }
-
                     } else {
                         Log.d("Profile", "No such user")
                     }
                 }
-
 
                 override fun onCancelled(databaseError: DatabaseError) {
                     Log.d("Profile", "get failed with ", databaseError.toException())
@@ -89,12 +91,13 @@ class Settings : Fragment(R.layout.fragment_settings) {
             })
         }
     }
+
     private fun loadProfilePicture(profilePictureUrl: String) {
-        // Use a library like Glide or Picasso to load the image into the CircleImageView
-        Glide.with(this /* or your activity */)
+        // Use a library like Glide or Picasso to load the image into the ImageView
+        Glide.with(this)
             .load(profilePictureUrl)
             .placeholder(R.drawable.pfp) // Placeholder image while loading
-            .error(R.drawable.pfp) // Image to show if loading fails
+            .error(R.drawable.pfp)       // Image to show if loading fails
             .into(myProfilePic)
     }
 }
