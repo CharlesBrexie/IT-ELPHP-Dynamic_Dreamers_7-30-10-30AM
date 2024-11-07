@@ -38,17 +38,19 @@ class RegisterActivity : AppCompatActivity() {
             if (name.isNotEmpty() && phoneNumber.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
                 // Check if email already exists
                 if (!dbHelper.isEmailExists(email)) {
-                    // Create DataClass object
+                    // Create DataClass object and set the password
                     val user = DataClass().apply {
                         this.name = name
                         this.phoneNumber = phoneNumber
                         this.email = email
                         this.userType = userType
-                        this.pfp = "" // You can add default profile picture URL or set it from input
+                        this.pfp = "" // Default profile picture
+                        this.password = password // Set the password
                     }
 
-                    // Save user to SQLite
-                    if (dbHelper.addUser(user)) {
+                    // Save user to SQLite using insertUserData
+                    val result = dbHelper.insertUserData(user)
+                    if (result != -1L) {
                         Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, SigninActivity::class.java))
                         finish()
