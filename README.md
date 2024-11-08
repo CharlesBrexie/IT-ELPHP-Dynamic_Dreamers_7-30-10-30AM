@@ -8,20 +8,20 @@ ELDROID Members
 
 Project Manager: Charles Brexie T. Saturinas
 
-Jay Esplaguera
-Dominic Restauro
-Butch Nino Butas
-Kevin Cachero
-William James Janohan
+Jay Esplaguera,
+Dominic Restauro,
+Butch Nino Butas,
+Kevin Cachero,
+William James Janohan,
 
 ELPHP Members
 
 Project Manager: Charles Brexie Saturinas
 
-Dominic Restauro
-Jay esplaguera (Alliance)
-Jessalyn Sadili
-Fretch Hugo
+Dominic Restauro,
+Jay esplaguera (Alliance),
+Jessalyn Sadili,
+Fretch Hugo,
 
 Android Repo Link: https://github.com/CharlesBrexie/ELDROID-Dynamic_Dreamers_7-30-10-30AM.git
 
